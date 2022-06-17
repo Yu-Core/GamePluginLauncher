@@ -5,8 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GamePluginLauncher"
         mc:Ignorable="d"
-        Title="游戏插件启动器" Height="450" Width="800">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="游戏插件启动器" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
+        <Grid.Resources>
+            <system:Double x:Key="ButtonWidth">100</system:Double>
+        </Grid.Resources>
+        <Button
+                  Style="{StaticResource MaterialDesignRaisedButton}"
+                  Width="{StaticResource ButtonWidth}"
+                  ToolTip="Resource name: MaterialDesignRaisedButton"
+                  Content="_MID"
+                  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
 
     </Grid>
 </Window>
