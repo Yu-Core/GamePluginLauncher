@@ -29,97 +29,8 @@
         <Border Grid.Row="1"
                 Padding="15">
             <WrapPanel HorizontalAlignment="Center" >
-                <materialDesign:Card Width="200" Height="120" Margin="15" 
-                                 Padding="20"
-                                 Background= "{DynamicResource PrimaryHueLightBrush}"
-                                 Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                                 materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                                 UniformCornerRadius="10">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Image    Source="pack://application:,,,/Image/LSCS.ico"
-                                  Height="70"
-                                  Width="70"
-                                  Stretch="UniformToFill" />
-                        <TextBlock Grid.Column="1"
-                               Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"
-                               Text="启动器名称">
-                        </TextBlock>
-                    </Grid>
-                </materialDesign:Card>
-                <materialDesign:Card Width="200" Height="120" Margin="15,15,15,15" 
-                                 Padding="20"
-                                 Background= "{DynamicResource PrimaryHueLightBrush}"
-                                 Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                                 materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                                 UniformCornerRadius="10" HorizontalAlignment="Stretch">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Image    Height="70"
-                              Width="70"
-                              Stretch="UniformToFill" />
-                        <TextBlock Grid.Column="1"
-                               Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"
-                               Text="启动器名称">
-                        </TextBlock>
-                    </Grid>
-                </materialDesign:Card>
-                <materialDesign:Card Width="200" Height="120" Margin="15,15,15,15" 
-                                 Padding="20"
-                                 Background= "{DynamicResource PrimaryHueLightBrush}"
-                                 Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                                 materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                                 UniformCornerRadius="10" HorizontalAlignment="Stretch">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Image    Height="70"
-                              Width="70"
-                              Stretch="UniformToFill" />
-                        <TextBlock Grid.Column="1"
-                               Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"
-                               Text="启动器名称">
-                        </TextBlock>
-                    </Grid>
-                </materialDesign:Card>
-                <materialDesign:Card Width="200" Height="120" Margin="15,15,15,15" 
-                                 Padding="20"
-                                 Background= "{DynamicResource PrimaryHueLightBrush}"
-                                 Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                                 materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                                 UniformCornerRadius="10" HorizontalAlignment="Stretch">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Image    Height="70"
-                              Width="70"
-                              Stretch="UniformToFill" />
-                        <TextBlock Grid.Column="1"
-                               Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"
-                               Text="启动器名称">
-                        </TextBlock>
-                    </Grid>
-                </materialDesign:Card>
-
-                <Button Width="200"
+                <Button x:Name="LauncherCard"
+                        Width="200"
                         Height="120"
                         Margin="15,15,15,15"
                         Padding="0"
@@ -129,52 +40,35 @@
                         materialDesign:ButtonAssist.CornerRadius="10"
                         BorderThickness="0"
                         materialDesign:ShadowAssist.ShadowDepth="Depth3">
-                    <Grid Width="180"
-                        Height="80">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal" >
                         <Image  Source="pack://application:,,,/Image/LSCS.ico"
                                 Height="70"
                                 Width="70"
                                 Stretch="UniformToFill" />
                         <TextBlock Grid.Column="1"
-                               Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"
-                               Text="启动器名称">
-                        </TextBlock>
-                    </Grid>
-                </Button>
-                <Button Width="200"
-                        Height="120"
-                        Margin="15,15,15,15"
-                        Padding="0"
-                        Cursor="Hand"
-                        Background= "{DynamicResource PrimaryHueLightBrush}"
-                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                        materialDesign:ButtonAssist.CornerRadius="10"
-                        BorderThickness="0"
-                        materialDesign:ShadowAssist.ShadowDepth="Depth3">
-                    <StackPanel>
-                        <Image  Source="pack://application:,,,/Image/LSCS.ico"
-                                Height="70"
-                                Width="70"
-                                Stretch="UniformToFill" />
-                        <TextBlock Grid.Column="1"
-                               Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"
-                               Text="启动器名称">
+                                   Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Margin="10,0,0,0"
+                                   Text="启动器名称">
                         </TextBlock>
                     </StackPanel>
-                        
-                    
+                </Button>
+                <Button x:Name="AddCard"
+                        Width="200"
+                        Height="120"
+                        Margin="15,15,15,15"
+                        Padding="0"
+                        Cursor="Hand"
+                        Background= "{DynamicResource PrimaryHueLightBrush}"
+                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                        materialDesign:ButtonAssist.CornerRadius="10"
+                        BorderThickness="0"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth3">
+                    <materialDesign:PackIcon Kind="Plus" Width="50" Height="50" />
                 </Button>
             </WrapPanel>
         </Border>
-        
     </Grid>
-    
+
 </Window>
