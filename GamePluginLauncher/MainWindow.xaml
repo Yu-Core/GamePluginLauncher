@@ -5,31 +5,216 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GamePluginLauncher" 
         mc:Ignorable="d"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
-        FontFamily="{materialDesign:MaterialDesignFont}"
+        FontFamily="Microsoft YaHei UI"
         Title="游戏插件启动器" 
         Height="450" 
         Width="800" 
         WindowStartupLocation="CenterScreen">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-        <Button Style="{StaticResource MaterialDesignIconButton}"
+    <materialDesign:DialogHost DialogTheme="Inherit">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Button Style="{StaticResource MaterialDesignIconButton}"
                 ToolTip="MaterialDesignIconButton" Cursor="Hand"
                 HorizontalAlignment="Right"
-                Margin="0,0,10,0">
-            <materialDesign:PackIcon Kind="Rotate3dVariant" Width="30" Height="30" />
-        </Button>
-        <Border Grid.Row="1"
+                Margin="0,0,10,0" >
+                <materialDesign:PackIcon Kind="Rotate3dVariant" Width="30" Height="30"/>
+            </Button>
+            <Border Grid.Row="1"
                 Padding="15">
-            <WrapPanel HorizontalAlignment="Center" >
-                <Button x:Name="LauncherCard"
+                <WrapPanel HorizontalAlignment="Center" >
+                    <Button x:Name="LauncherCard"
+                        Width="200"
+                        Height="120"
+                        Margin="15,15,15,15"
+                        Padding="0"
+                        Cursor="Hand"
+                        Background= "{DynamicResource PrimaryHueLightBrush}"
+                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                        materialDesign:ButtonAssist.CornerRadius="10"
+                        BorderThickness="0"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                        Click="LauncherCard_Click">
+                        <Grid Width="200"
+                          Height="120">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <materialDesign:PopupBox x:Name="LauncherOptions"
+                                                     HorizontalAlignment="Right"
+                                                     Style="{StaticResource  MaterialDesignToolPopupBox}"
+                                                     PopupUniformCornerRadius="10"
+                                                     Width="25"
+                                                     Height="25"
+                                                     Margin="0,0,8,-8"
+                                                     Padding="2 0 2 0"
+                                                     ButtonBase.Click="LauncherOptions_Click">
+                                <StackPanel>
+                                    <Button Content="添加插件" ></Button>
+                                    <Button Content="编辑"
+                                            Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                                        <Button.CommandParameter>
+                                            <StackPanel Width="300" Margin="16">
+                                                <TextBlock Text="编辑启动器" HorizontalAlignment="Left"/>
+
+                                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                                         materialDesign:HintAssist.Hint="启动器名称"
+                                                         Margin="0 8 0 0"
+                                                         HorizontalAlignment="Stretch"/>
+                                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                                         materialDesign:HintAssist.Hint="启动器路径"
+                                                         Margin="0 8 0 0"
+                                                         HorizontalAlignment="Stretch"/>
+
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                                            IsDefault="True"
+                                                            Margin="0 8 8 0"
+                                                            Content="取消"
+                                                            HorizontalAlignment="Left"
+                                                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                                                        <Button.CommandParameter>
+                                                            <system:Boolean>False</system:Boolean>
+                                                        </Button.CommandParameter>
+                                                    </Button>
+                                                    <Button Grid.Column="1"
+                                                            Style="{StaticResource MaterialDesignFlatButton}"
+                                                            IsCancel="True"
+                                                            Margin="0 8 8 0"
+                                                            Content="保存"
+                                                            HorizontalAlignment="Right"
+                                                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                                                        <Button.CommandParameter>
+                                                            <system:Boolean>True</system:Boolean>
+                                                        </Button.CommandParameter>
+                                                    </Button>
+                                                </Grid>
+                                            </StackPanel>
+                                        </Button.CommandParameter>
+                                    </Button>
+                                    <Button Content="重命名"
+                                            Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                                        <Button.CommandParameter>
+                                            <StackPanel Width="300" Margin="16">
+                                                <TextBlock Text="重命名启动器" HorizontalAlignment="Left"/>
+
+                                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                                         materialDesign:HintAssist.Hint="启动器名称"
+                                                         Margin="0 8 0 0"
+                                                         HorizontalAlignment="Stretch"/>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                                            IsDefault="True"
+                                                            Margin="0 8 8 0"
+                                                            Content="取消"
+                                                            HorizontalAlignment="Left"
+                                                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                                                        <Button.CommandParameter>
+                                                            <system:Boolean>True</system:Boolean>
+                                                        </Button.CommandParameter>
+                                                    </Button>
+                                                    <Button Grid.Column="1"
+                                                            Style="{StaticResource MaterialDesignFlatButton}"
+                                                            IsCancel="True"
+                                                            Margin="0 8 8 0"
+                                                            Content="保存"
+                                                            HorizontalAlignment="Right"
+                                                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                                                        <Button.CommandParameter>
+                                                            <system:Boolean>False</system:Boolean>
+                                                        </Button.CommandParameter>
+                                                    </Button>
+                                                </Grid>
+                                            </StackPanel>
+                                        </Button.CommandParameter>
+                                    </Button>
+                                    <Button Content="创建快捷方式"></Button>
+                                    <Button Content="打开游戏启动路径"/>
+                                    <Button Content="删除"
+                                            Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                                        <Button.CommandParameter>
+                                            <StackPanel Width="300" Margin="16">
+                                                <TextBlock Text="删除启动器" HorizontalAlignment="Left"/>
+
+                                                <TextBlock Margin="0 16 0 0"
+                                                           Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                                           FontSize="16"
+                                                           HorizontalAlignment="Center"
+                                                           Text="是否删除该启动器？">
+                                                </TextBlock>
+
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                                            IsDefault="True"
+                                                            Margin="0 8 8 0"
+                                                            IsCancel="True"
+                                                            Content="取消"
+                                                            HorizontalAlignment="Left"
+                                                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                                                        <Button.CommandParameter>
+                                                            <system:Boolean>False</system:Boolean>
+                                                        </Button.CommandParameter>
+                                                    </Button>
+                                                    <Button Grid.Column="1"
+                                                            Style="{StaticResource MaterialDesignFlatButton}"
+                                                            Foreground="Red"
+                                                            Margin="0 8 8 0"
+                                                            Content="删除"
+                                                            HorizontalAlignment="Right"
+                                                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                                                        <Button.CommandParameter>
+                                                            <system:Boolean>True</system:Boolean>
+                                                        </Button.CommandParameter>
+                                                    </Button>
+                                                </Grid>
+                                            </StackPanel>
+                                        </Button.CommandParameter>
+                                    </Button>
+                                </StackPanel>
+                            </materialDesign:PopupBox>
+
+                            <StackPanel Grid.Row="1" 
+                                        Orientation="Horizontal"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Top">
+                                <Image  Source="pack://application:,,,/Image/LSCS.ico"
+                                        Height="70"
+                                        Width="70"
+                                        Stretch="UniformToFill" />  
+                                <TextBlock Grid.Column="1"
+                                           Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Margin="10,0,0,0"
+                                           Text="启动器名称">
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="AddCard"
                         Width="200"
                         Height="120"
                         Margin="15,15,15,15"
@@ -40,35 +225,14 @@
                         materialDesign:ButtonAssist.CornerRadius="10"
                         BorderThickness="0"
                         materialDesign:ShadowAssist.ShadowDepth="Depth3">
-                    <StackPanel Orientation="Horizontal" >
-                        <Image  Source="pack://application:,,,/Image/LSCS.ico"
-                                Height="70"
-                                Width="70"
-                                Stretch="UniformToFill" />
-                        <TextBlock Grid.Column="1"
-                                   Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   Margin="10,0,0,0"
-                                   Text="启动器名称">
-                        </TextBlock>
-                    </StackPanel>
-                </Button>
-                <Button x:Name="AddCard"
-                        Width="200"
-                        Height="120"
-                        Margin="15,15,15,15"
-                        Padding="0"
-                        Cursor="Hand"
-                        Background= "{DynamicResource PrimaryHueLightBrush}"
-                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                        materialDesign:ButtonAssist.CornerRadius="10"
-                        BorderThickness="0"
-                        materialDesign:ShadowAssist.ShadowDepth="Depth3">
-                    <materialDesign:PackIcon Kind="Plus" Width="50" Height="50" />
-                </Button>
-            </WrapPanel>
-        </Border>
-    </Grid>
+                        <materialDesign:PackIcon Kind="Plus" Width="50" Height="50" />
+                    </Button>
+
+                </WrapPanel>
+            </Border>
+        </Grid>
+    </materialDesign:DialogHost>
+
+
 
 </Window>

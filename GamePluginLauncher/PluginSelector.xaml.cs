@@ -10,30 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace GamePluginLauncher
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// PluginSelector.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class PluginSelector : Window
     {
-        public MainWindow()
+        public PluginSelector()
         {
             InitializeComponent();
-        }
-
-        private void LauncherCard_Click(object sender, RoutedEventArgs e)
-        {
-            var pluginSelector = new PluginSelector();
-            pluginSelector.ShowDialog();
-        }
-
-        private void LauncherOptions_Click(object sender, RoutedEventArgs e)
-        {
-            e.Handled = true;
         }
     }
 }
