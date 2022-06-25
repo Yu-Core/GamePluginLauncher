@@ -4,9 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GamePluginLauncher.Carousel"
-             mc:Ignorable="d" d:DesignHeight="540" d:DesignWidth="960"
-             xmlns:Carousel="clr-namespace:GamePluginLauncher.Carousel" Background="#FF1E1E1E">
+             mc:Ignorable="d" d:DesignHeight="240" d:DesignWidth="800"
+             xmlns:Carousel="clr-namespace:GamePluginLauncher.Carousel" Background="Transparent">
     <Grid x:Name="GdRoot" Background="Transparent">
-        <Canvas x:Name="CvMain"></Canvas>
+        <Canvas x:Name="CvMain" Height="300" Margin="0,25,0,0" >
+        </Canvas>
     </Grid>
 </UserControl>

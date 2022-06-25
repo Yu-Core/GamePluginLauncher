@@ -63,12 +63,12 @@ namespace GamePluginLauncher.Carousel
         #region Create Elements
 
         private double Radius = 325d;
-        private double VisualCount = 10d;
+        private double VisualCount = 6d;//10d
         private List<AnimImage> ElementList;
         private double CenterDegree = 180d;
         private double TotalDegree = 0;
-        private double ElementWidth = 260;
-        private double ElementHeight = 180;
+        private double ElementWidth = 444;//260
+        private double ElementHeight = 250;//180
 
         private double GetScaledSize(double degrees)
         {
@@ -104,7 +104,7 @@ namespace GamePluginLauncher.Carousel
                 oItem.MouseLeftButtonUp += OItem_MouseLeftButtonUp;
                 oItem.Width = this.ElementWidth;
                 oItem.Height = this.ElementHeight;
-                oItem.Y = 175d;
+                oItem.Y = 0d;
                 oItem.Degree = i * dAverageDegree;
                 this.ElementList.Add(oItem);
             }
