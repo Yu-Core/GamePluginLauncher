@@ -18,13 +18,17 @@
             <RowDefinition></RowDefinition>
             <RowDefinition Height="150"></RowDefinition>
         </Grid.RowDefinitions>
+        <Border Padding="15,15,15,0">
+            <WrapPanel HorizontalAlignment="Center">
+            </WrapPanel>
+        </Border>
         <Button Grid.Row="1"
                 Style="{StaticResource MaterialDesignRaisedDarkButton}"
                 Width="200"
                 Height="50"
                 materialDesign:ButtonAssist.CornerRadius="20"
                 Content="启动">
-            
+
         </Button>
     </Grid>
 </Window>
