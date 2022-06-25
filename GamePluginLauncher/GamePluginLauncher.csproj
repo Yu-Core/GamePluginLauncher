@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Imgs\**" />
+    <EmbeddedResource Remove="Imgs\**" />
+    <None Remove="Imgs\**" />
+    <Page Remove="Imgs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Image\LSCS.ico" />
   </ItemGroup>
 

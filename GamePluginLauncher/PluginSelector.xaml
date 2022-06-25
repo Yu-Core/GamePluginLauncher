@@ -19,8 +19,10 @@
             <RowDefinition Height="150"></RowDefinition>
         </Grid.RowDefinitions>
         <Border Padding="15,15,15,0">
-            <WrapPanel HorizontalAlignment="Center">
-            </WrapPanel>
+            <Grid x:Name="GdContent" Background="Transparent"  
+                  >
+                
+            </Grid>
         </Border>
         <Button Grid.Row="1"
                 Style="{StaticResource MaterialDesignRaisedDarkButton}"
