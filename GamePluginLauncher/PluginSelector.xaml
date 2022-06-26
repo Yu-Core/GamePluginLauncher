@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GamePluginLauncher"
         mc:Ignorable="d"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:carousel="clr-namespace:GamePluginLauncher.Carousel"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
@@ -19,8 +19,8 @@
             <RowDefinition Height="150"></RowDefinition>
         </Grid.RowDefinitions>
         <Border Padding="15,15,15,0">
-            <Grid x:Name="GdContent" Background="Transparent"  
-                  >
+            <Grid x:Name="GdContent" Background="Transparent">
+                <carousel:CarouselModuleView></carousel:CarouselModuleView>
                 
             </Grid>
         </Border>

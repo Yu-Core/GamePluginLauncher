@@ -1,5 +1,4 @@
-﻿
-    <Window x:Class="GamePluginLauncher.MainWindow"
+﻿<Window x:Class="GamePluginLauncher.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -24,35 +23,36 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Button Style="{StaticResource MaterialDesignIconButton}"
+            <!--<Button Style="{StaticResource MaterialDesignIconButton}"
                 ToolTip="MaterialDesignIconButton" Cursor="Hand"
                 HorizontalAlignment="Right"
                 Margin="0,0,10,0" >
                 <materialDesign:PackIcon Kind="Rotate3dVariant" Width="30" Height="30"/>
-            </Button>
+            </Button>-->
             <Border Grid.Row="1"
-                Padding="15">
-                <WrapPanel HorizontalAlignment="Center" >
-                    <Button x:Name="LauncherCard"
-                        Width="200"
-                        Height="120"
-                        Margin="15,15,15,15"
-                        Padding="0"
-                        Cursor="Hand"
-                        Background= "{DynamicResource PrimaryHueLightBrush}"
-                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                        materialDesign:ButtonAssist.CornerRadius="10"
-                        BorderThickness="0"
-                        materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                        Click="LauncherCard_Click">
-                        <Grid Width="200"
-                          Height="120">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="25"></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
+                Padding="15" HorizontalAlignment="Center">
+                <ItemsControl ItemsSource="{Binding GameLaunchers}" >
+                        <ItemsControl.Resources>
+                            <DataTemplate x:Key="LauncherBtn">
+                                <Button Width="200"
+                                        Height="120"
+                                        Margin="15,15,15,15"
+                                        Padding="0"
+                                        Cursor="Hand"
+                                        Background= "{DynamicResource PrimaryHueLightBrush}"
+                                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                        materialDesign:ButtonAssist.CornerRadius="10"
+                                        BorderThickness="0"
+                                        materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                        Click="LauncherCard_Click">
+                                    <Grid Width="200"
+                                          Height="120">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="25"></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
 
-                            <materialDesign:PopupBox x:Name="LauncherOptions"
+                                        <materialDesign:PopupBox x:Name="LauncherOptions"
                                                      HorizontalAlignment="Right"
                                                      Style="{StaticResource  MaterialDesignToolPopupBox}"
                                                      PopupUniformCornerRadius="10"
@@ -61,181 +61,194 @@
                                                      Margin="0,0,8,-8"
                                                      Padding="2 0 2 0"
                                                      ButtonBase.Click="LauncherOptions_Click">
-                                <StackPanel>
-                                    <Button Content="添加插件" ></Button>
-                                    <Button Content="编辑"
+                                            <StackPanel>
+                                                <Button Content="添加插件" ></Button>
+                                                <Button Content="编辑"
                                             Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
-                                        <Button.CommandParameter>
-                                            <StackPanel Width="300" Margin="16">
-                                                <TextBlock Text="编辑启动器" 
+                                                    <Button.CommandParameter>
+                                                        <StackPanel Width="300" Margin="16">
+                                                            <TextBlock Text="编辑启动器" 
                                                            HorizontalAlignment="Left"
                                                            FontWeight="Bold"/>
 
-                                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                                            <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                                          materialDesign:HintAssist.Hint="启动器名称"
                                                          Margin="0 8 0 0"
                                                          HorizontalAlignment="Stretch"/>
-                                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                                            <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                                          materialDesign:HintAssist.Hint="启动器路径"
                                                          Margin="0 8 0 0"
                                                          HorizontalAlignment="Stretch"/>
 
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition></ColumnDefinition>
-                                                        <ColumnDefinition></ColumnDefinition>
-                                                    </Grid.ColumnDefinitions>
-                                                    <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition></ColumnDefinition>
+                                                                    <ColumnDefinition></ColumnDefinition>
+                                                                </Grid.ColumnDefinitions>
+                                                                <Button Style="{StaticResource MaterialDesignFlatButton}"
                                                             IsDefault="True"
                                                             Margin="0 8 8 0"
                                                             Content="取消"
                                                             HorizontalAlignment="Left"
                                                             Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
-                                                        <Button.CommandParameter>
-                                                            <system:Boolean>False</system:Boolean>
-                                                        </Button.CommandParameter>
-                                                    </Button>
-                                                    <Button Grid.Column="1"
+                                                                    <Button.CommandParameter>
+                                                                        <system:Boolean>False</system:Boolean>
+                                                                    </Button.CommandParameter>
+                                                                </Button>
+                                                                <Button Grid.Column="1"
                                                             Style="{StaticResource MaterialDesignFlatButton}"
                                                             IsCancel="True"
                                                             Margin="0 8 8 0"
                                                             Content="保存"
                                                             HorizontalAlignment="Right"
                                                             Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
-                                                        <Button.CommandParameter>
-                                                            <system:Boolean>True</system:Boolean>
-                                                        </Button.CommandParameter>
-                                                    </Button>
-                                                </Grid>
-                                            </StackPanel>
-                                        </Button.CommandParameter>
-                                    </Button>
-                                    <Button Content="重命名"
+                                                                    <Button.CommandParameter>
+                                                                        <system:Boolean>True</system:Boolean>
+                                                                    </Button.CommandParameter>
+                                                                </Button>
+                                                            </Grid>
+                                                        </StackPanel>
+                                                    </Button.CommandParameter>
+                                                </Button>
+                                                <Button Content="重命名"
                                             Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
-                                        <Button.CommandParameter>
-                                            <StackPanel Width="300" Margin="16">
-                                                <TextBlock Text="重命名启动器" 
+                                                    <Button.CommandParameter>
+                                                        <StackPanel Width="300" Margin="16">
+                                                            <TextBlock Text="重命名启动器" 
                                                            HorizontalAlignment="Left"
                                                            FontWeight="Bold"/>
 
-                                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                                            <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                                          materialDesign:HintAssist.Hint="启动器名称"
                                                          Margin="0 8 0 0"
                                                          HorizontalAlignment="Stretch"/>
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition></ColumnDefinition>
-                                                        <ColumnDefinition></ColumnDefinition>
-                                                    </Grid.ColumnDefinitions>
-                                                    <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition></ColumnDefinition>
+                                                                    <ColumnDefinition></ColumnDefinition>
+                                                                </Grid.ColumnDefinitions>
+                                                                <Button Style="{StaticResource MaterialDesignFlatButton}"
                                                             IsDefault="True"
                                                             Margin="0 8 8 0"
                                                             Content="取消"
                                                             HorizontalAlignment="Left"
                                                             Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
-                                                        <Button.CommandParameter>
-                                                            <system:Boolean>True</system:Boolean>
-                                                        </Button.CommandParameter>
-                                                    </Button>
-                                                    <Button Grid.Column="1"
+                                                                    <Button.CommandParameter>
+                                                                        <system:Boolean>True</system:Boolean>
+                                                                    </Button.CommandParameter>
+                                                                </Button>
+                                                                <Button Grid.Column="1"
                                                             Style="{StaticResource MaterialDesignFlatButton}"
                                                             IsCancel="True"
                                                             Margin="0 8 8 0"
                                                             Content="保存"
                                                             HorizontalAlignment="Right"
                                                             Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
-                                                        <Button.CommandParameter>
-                                                            <system:Boolean>False</system:Boolean>
-                                                        </Button.CommandParameter>
-                                                    </Button>
-                                                </Grid>
-                                            </StackPanel>
-                                        </Button.CommandParameter>
-                                    </Button>
-                                    <Button Content="创建快捷方式"></Button>
-                                    <Button Content="打开游戏启动路径"/>
-                                    <Button Content="删除"
+                                                                    <Button.CommandParameter>
+                                                                        <system:Boolean>False</system:Boolean>
+                                                                    </Button.CommandParameter>
+                                                                </Button>
+                                                            </Grid>
+                                                        </StackPanel>
+                                                    </Button.CommandParameter>
+                                                </Button>
+                                                <Button Content="创建快捷方式"></Button>
+                                                <Button Content="打开游戏启动路径"/>
+                                                <Button Content="删除"
                                             Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
-                                        <Button.CommandParameter>
-                                            <StackPanel Width="300" Margin="16">
-                                                <TextBlock Text="删除启动器" 
+                                                    <Button.CommandParameter>
+                                                        <StackPanel Width="300" Margin="16">
+                                                            <TextBlock Text="删除启动器" 
                                                            HorizontalAlignment="Left"
                                                            FontWeight="Bold"/>
 
-                                                <TextBlock Margin="0 16 0 0"
+                                                            <TextBlock Margin="0 16 0 0"
                                                            Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                                                            FontSize="16"
                                                            HorizontalAlignment="Center"
                                                            Text="是否删除该启动器？">
-                                                </TextBlock>
+                                                            </TextBlock>
 
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition></ColumnDefinition>
-                                                        <ColumnDefinition></ColumnDefinition>
-                                                    </Grid.ColumnDefinitions>
-                                                    <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition></ColumnDefinition>
+                                                                    <ColumnDefinition></ColumnDefinition>
+                                                                </Grid.ColumnDefinitions>
+                                                                <Button Style="{StaticResource MaterialDesignFlatButton}"
                                                             IsDefault="True"
                                                             Margin="0 8 8 0"
                                                             IsCancel="True"
                                                             Content="取消"
                                                             HorizontalAlignment="Left"
                                                             Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
-                                                        <Button.CommandParameter>
-                                                            <system:Boolean>False</system:Boolean>
-                                                        </Button.CommandParameter>
-                                                    </Button>
-                                                    <Button Grid.Column="1"
+                                                                    <Button.CommandParameter>
+                                                                        <system:Boolean>False</system:Boolean>
+                                                                    </Button.CommandParameter>
+                                                                </Button>
+                                                                <Button Grid.Column="1"
                                                             Style="{StaticResource MaterialDesignFlatButton}"
                                                             Foreground="Red"
                                                             Margin="0 8 8 0"
                                                             Content="删除"
                                                             HorizontalAlignment="Right"
                                                             Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
-                                                        <Button.CommandParameter>
-                                                            <system:Boolean>True</system:Boolean>
-                                                        </Button.CommandParameter>
-                                                    </Button>
-                                                </Grid>
+                                                                    <Button.CommandParameter>
+                                                                        <system:Boolean>True</system:Boolean>
+                                                                    </Button.CommandParameter>
+                                                                </Button>
+                                                            </Grid>
+                                                        </StackPanel>
+                                                    </Button.CommandParameter>
+                                                </Button>
                                             </StackPanel>
-                                        </Button.CommandParameter>
-                                    </Button>
-                                </StackPanel>
-                            </materialDesign:PopupBox>
+                                        </materialDesign:PopupBox>
 
-                            <StackPanel Grid.Row="1" 
+                                        <StackPanel Grid.Row="1" 
                                         Orientation="Horizontal"
-                                        HorizontalAlignment="Center"
                                         VerticalAlignment="Top">
-                                <Image  Source="pack://application:,,,/Image/LSCS.ico"
-                                        Height="70"
-                                        Width="70"
-                                        Stretch="UniformToFill" />  
-                                <TextBlock Grid.Column="1"
-                                           Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Center"
-                                           Margin="10,0,0,0"
-                                           Text="启动器名称">
-                                </TextBlock>
-                            </StackPanel>
-                        </Grid>
-                    </Button>
-                    <Button x:Name="AddCard"
-                        Width="200"
-                        Height="120"
-                        Margin="15,15,15,15"
-                        Padding="0"
-                        Cursor="Hand"
-                        Background= "{DynamicResource PrimaryHueLightBrush}"
-                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                        materialDesign:ButtonAssist.CornerRadius="10"
-                        BorderThickness="0"
-                        materialDesign:ShadowAssist.ShadowDepth="Depth3">
-                        <materialDesign:PackIcon Kind="Plus" Width="50" Height="50" />
-                    </Button>
-
-                </WrapPanel>
+                                            <Image  Source="pack://application:,,,/Image/LSCS.ico"
+                                                    Height="70"
+                                                    Width="70"
+                                                    Stretch="UniformToFill"
+                                                    Margin="25,0,0,0"/>
+                                            <TextBlock Grid.Column="1"
+                                                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center"
+                                                       Margin="10,0,0,0"
+                                                       Text="{Binding Name}">
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                </Button>
+                            </DataTemplate>
+                            <DataTemplate x:Key="AddBtn">
+                                <Button Width="200"
+                                        Height="120"
+                                        Margin="15,15,15,15"
+                                        Padding="0"
+                                        Cursor="Hand"
+                                        Background= "{DynamicResource PrimaryHueLightBrush}"
+                                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                        materialDesign:ButtonAssist.CornerRadius="10"
+                                        BorderThickness="0"
+                                        materialDesign:ShadowAssist.ShadowDepth="Depth3">
+                                    <materialDesign:PackIcon Kind="Plus" Width="50" Height="50" />
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.Resources>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel>
+                                </WrapPanel>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplateSelector>
+                            <local:DataTypeTemplateSelector DT1="{StaticResource LauncherBtn}"
+                                                            DT2="{StaticResource AddBtn}">
+                            </local:DataTypeTemplateSelector>
+                        </ItemsControl.ItemTemplateSelector>
+                    </ItemsControl>
             </Border>
         </Grid>
     </materialDesign:DialogHost>
