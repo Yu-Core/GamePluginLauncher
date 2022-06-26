@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GamePluginLauncher.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,9 @@ namespace GamePluginLauncher
     {
         public MainWindow()
         {
+            DataContext = new MainWindowViewModel();
             InitializeComponent();
+            
         }
 
         private void LauncherCard_Click(object sender, RoutedEventArgs e)

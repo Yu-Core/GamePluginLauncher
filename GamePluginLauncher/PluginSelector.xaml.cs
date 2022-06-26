@@ -23,7 +23,6 @@ namespace GamePluginLauncher
         public PluginSelector()
         {
             InitializeComponent();
-            this.GdContent.Children.Add(new CarouselModuleView());
         }
     }
 }
