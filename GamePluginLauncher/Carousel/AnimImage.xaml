@@ -20,7 +20,7 @@
     </UserControl.RenderTransform>
     <materialDesign:Card UniformCornerRadius="20" ClipContent="True">
         <Grid>
-            <Image  Stretch="UniformToFill" x:Name="ImgMain"/>
+            <Image  Stretch="UniformToFill" x:Name="ImgMain" Height="250"/>
             <TextBlock VerticalAlignment="Bottom" Margin="15,15" Foreground="White"
                    TextWrapping="Wrap" x:Name="TbkTitle" TextAlignment="Center"/>
         </Grid>
