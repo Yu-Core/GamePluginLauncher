@@ -23,7 +23,6 @@ namespace GamePluginLauncher
     {
         public MainWindow()
         {
-            DataContext = new MainWindowViewModel();
             InitializeComponent();
             
         }

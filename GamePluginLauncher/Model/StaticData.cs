@@ -14,14 +14,14 @@ namespace GamePluginLauncher.Model
         public static Config? Config { get; private set; }
 
         public const string PATH_DATA = @"Data\";
-        public const string PATH_APPLIST_JSON = PATH_DATA + "GameLauncher.json";
+        public const string PATH_GAMELAUNCHER_JSON = PATH_DATA + "GameLauncher.json";
         public const string PATH_CONFIG_JSON = PATH_DATA + "Config.json";
 
         private static void LoadGameLaunchers()
         {
-            if (File.Exists(PATH_APPLIST_JSON))
+            if (File.Exists(PATH_GAMELAUNCHER_JSON))
             {
-                var json = File.ReadAllText(PATH_APPLIST_JSON);
+                var json = File.ReadAllText(PATH_GAMELAUNCHER_JSON);
                 GameLaunchers = JsonConvert.DeserializeObject<ObservableCollection<GameLauncher>>(json);
             }
             if (GameLaunchers == null)
@@ -40,7 +40,7 @@ namespace GamePluginLauncher.Model
             if (!Directory.Exists(PATH_DATA))
                 Directory.CreateDirectory(PATH_DATA);
             var json = JsonConvert.SerializeObject(GameLaunchers, Formatting.Indented);
-            File.WriteAllText(PATH_APPLIST_JSON, json);
+            File.WriteAllText(PATH_GAMELAUNCHER_JSON, json);
         }
 
         private static void LoadConfig()
