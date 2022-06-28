@@ -33,4 +33,8 @@
     </Resource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="View\Custom\" />
+  </ItemGroup>
+
 </Project>

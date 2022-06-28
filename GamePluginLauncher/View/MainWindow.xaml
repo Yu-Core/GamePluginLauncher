@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:GamePluginLauncher" 
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
-        xmlns:system="clr-namespace:System;assembly=mscorlib" xmlns:custom="clr-namespace:GamePluginLauncher.View.Custom" xmlns:model="clr-namespace:GamePluginLauncher.Model"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:model="clr-namespace:GamePluginLauncher.Model"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
@@ -38,7 +39,7 @@
                     <ItemsControl>
                         <ItemsControl.ItemsSource>
                             <CompositeCollection>
-                                <CollectionContainer Collection="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel.GameLaunchers}"></CollectionContainer>
+                                <CollectionContainer Collection="{Binding Source={x:Static model:StaticData.GameLaunchers}}"></CollectionContainer>
                                 <Button Width="200"
                                         Height="120"
                                         Margin="15,15,15,15"
@@ -48,7 +49,8 @@
                                         Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                                         materialDesign:ButtonAssist.CornerRadius="10"
                                         BorderThickness="0"
-                                        materialDesign:ShadowAssist.ShadowDepth="Depth3">
+                                        materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                        Command="{Binding NewGameLauncherCommand}">
                                     <materialDesign:PackIcon Kind="Plus" Width="50" Height="50" />
                                 </Button>
                             </CompositeCollection>

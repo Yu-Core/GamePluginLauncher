@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using GamePluginLauncher.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -76,15 +77,20 @@ namespace GamePluginLauncher.Model
             SaveConfig();
         }
 
-        public static void AddGameLauncher(string name)
+        public static void AddGameLauncher(string path)
         {
             if (GameLaunchers == null)
                 GameLaunchers = new ObservableCollection<GameLauncher>();
+
+            var name = PathHelper.GetFileNameWithoutSuffix(path);
+
             GameLaunchers.Add(new GameLauncher
             {
                 Name = name,
                 GamePlugins = new ObservableCollection<GamePlugin>()
             });
+
+            GameLaunchers[GameLaunchers.Count - 1].AddPlugin("原生启动",path);
         }
     }
 }
