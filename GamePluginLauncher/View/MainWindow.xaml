@@ -15,7 +15,10 @@
         Title="游戏插件启动器" 
         Height="450" 
         Width="800" 
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
+        Topmost="{Binding WindowTopmost}"
+        WindowState="{Binding WindowState}">
     <materialDesign:DialogHost DialogTheme="Inherit">
         <Grid>
             <Grid.RowDefinitions>

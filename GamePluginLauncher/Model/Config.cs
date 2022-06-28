@@ -8,8 +8,6 @@ namespace GamePluginLauncher.Model
     {
         public WindowInfo? MainWindowInfo { get; set; }
 
-        public int AppListListBoxSelectedIndex { get; set; }
-
         public bool MainWindowTopmost { get; set; }
 
         public bool MinimizeMainWindowAfterOpening { get; set; } = false;
