@@ -18,16 +18,15 @@ namespace GamePluginLauncher.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public List<GameLauncher> GameLaunchers { get; set; }
+        public ObservableCollection<GameLauncher> GameLaunchers { get; set; }
         public MainWindowViewModel()
         {
-            GameLaunchers = new List<GameLauncher>()
+            GameLaunchers = new ObservableCollection<GameLauncher>()
             {
                 new GameLauncher() { Name = "LOL" },
                 new GameLauncher() { Name = "CF" },
                 new GameLauncher() { Name = "DNF" },
-                new GameLauncher() { Name = "LSCS" },
-                null
+                new GameLauncher() { Name = "LSCS" }
             };
         }
     }
