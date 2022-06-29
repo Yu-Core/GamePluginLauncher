@@ -19,16 +19,16 @@ namespace GamePluginLauncher.ViewModel
     public class MainWindowViewModel : ViewModelBase
     {
         //public ObservableCollection<GameLauncher> GameLaunchers { get; set; }
-        public MainWindowViewModel()
-        {
-            //GameLaunchers = new ObservableCollection<GameLauncher>()
-            //{
-            //    new GameLauncher() { Name = "LOL" },
-            //    new GameLauncher() { Name = "CF" },
-            //    new GameLauncher() { Name = "DNF" },
-            //    new GameLauncher() { Name = "LSCS" }
-            //};
-        }
+        //public MainWindowViewModel()
+        //{
+        //    GameLaunchers = new ObservableCollection<GameLauncher>()
+        //    {
+        //        new GameLauncher() { Name = "LOL" },
+        //        new GameLauncher() { Name = "CF" },
+        //        new GameLauncher() { Name = "DNF" },
+        //        new GameLauncher() { Name = "LSCS" }
+        //    };
+        //}
 
         
 
@@ -67,16 +67,11 @@ namespace GamePluginLauncher.ViewModel
             set => UpdateValue(ref _showOpenErrorMsg, value);
         }
 
-        public DelegateCommand NewGameLauncherCommand { get; set; }
+        public DelegateCommand? NewGameLauncherCommand { get; set; }
+        public DelegateCommand? RemoveGameLauncherCommand { get; set; }
 
         private void NewGameLauncher(object obj)
         {
-            //InputTextDialog.ShowDialog(name =>
-            //{
-            //    StaticData.AddAppList(name);
-            //    AppListListBoxSelectedIndex = StaticData.AppLists.Count - 1;
-            //}, "新分类", "请输入新分类的名称：", "新分类");
-
             try
             {
                 var ofd = new OpenFileDialog
@@ -94,6 +89,11 @@ namespace GamePluginLauncher.ViewModel
             }
         }
 
+        private void RemoveGameLauncher(GameLauncher gameLauncher)
+        {
+            StaticData.GameLaunchers.Remove(gameLauncher);
+        }
+
         protected override void Init()
         {
             base.Init();
@@ -105,6 +105,7 @@ namespace GamePluginLauncher.ViewModel
             ShowOpenErrorMsg = config.ShowOpenErrorMessage;
 
             NewGameLauncherCommand = new DelegateCommand(NewGameLauncher);
+            RemoveGameLauncherCommand = new DelegateCommand<GameLauncher>(RemoveGameLauncher);
         }
     }
 }
