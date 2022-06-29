@@ -87,7 +87,7 @@
                                                      PopupUniformCornerRadius="10"
                                                      Width="25"
                                                      Height="25"
-                                                     Margin="0,0,8,-8"
+                                                     Margin="0,0,8,-16"
                                                      Padding="2 0 2 0"
                                                      ButtonBase.Click="LauncherOptions_Click">
                                             <StackPanel>
@@ -101,13 +101,13 @@
                                                            FontWeight="Bold"/>
 
                                                             <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                                         materialDesign:HintAssist.Hint="启动器名称"
-                                                         Margin="0 8 0 0"
-                                                         HorizontalAlignment="Stretch"/>
+                                                                     materialDesign:HintAssist.Hint="启动器名称"
+                                                                     Margin="0 8 0 0"
+                                                                     HorizontalAlignment="Stretch"/>
                                                             <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                                         materialDesign:HintAssist.Hint="启动器路径"
-                                                         Margin="0 8 0 0"
-                                                         HorizontalAlignment="Stretch"/>
+                                                                     materialDesign:HintAssist.Hint="启动器路径"
+                                                                     Margin="0 8 0 0"
+                                                                     HorizontalAlignment="Stretch"/>
 
                                                             <Grid>
                                                                 <Grid.ColumnDefinitions>
@@ -192,10 +192,10 @@
                                                            FontWeight="Bold"/>
 
                                                             <TextBlock Margin="0 16 0 0"
-                                                           Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                                           FontSize="16"
-                                                           HorizontalAlignment="Center"
-                                                           Text="是否删除该启动器？">
+                                                                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                                                       FontSize="16"
+                                                                       HorizontalAlignment="Center"
+                                                                       Text="是否删除该启动器？">
                                                             </TextBlock>
 
                                                             <Grid>
@@ -233,18 +233,22 @@
                                         </materialDesign:PopupBox>
 
                                         <StackPanel Grid.Row="1" 
-                                        Orientation="Horizontal"
-                                        VerticalAlignment="Top">
+                                                    Width="200"
+                                                    Orientation="Horizontal"
+                                                    VerticalAlignment="Top">        
                                             <Image  Source="pack://application:,,,/Image/LSCS.ico"
                                                     Height="70"
                                                     Width="70"
                                                     Stretch="UniformToFill"
-                                                    Margin="25,0,0,0"/>
+                                                    Margin="20,0,0,0"/>
                                             <TextBlock Grid.Column="1"
                                                        Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                                                        VerticalAlignment="Center"
                                                        HorizontalAlignment="Center"
                                                        Margin="10,0,0,0"
+                                                       Width="85"
+                                                       Height="35"
+                                                       TextWrapping="Wrap"
                                                        Text="{Binding Name}">
                                             </TextBlock>
                                         </StackPanel>
