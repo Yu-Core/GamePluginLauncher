@@ -56,14 +56,14 @@ namespace GamePluginLauncher.Carousel
             this.CreateElements();
 
             this.GdRoot.MouseLeftButtonDown += GdRoot_MouseLeftButtonDown;
-            this.MouseMove += Carousel2DView_MouseMove;
+            //this.MouseMove += Carousel2DView_MouseMove;
             this.MouseUp += Carousel2DView_MouseUp;
         }
 
         #region Create Elements
 
         private double Radius = 325d;
-        private double VisualCount = 6d;//10d
+        private double VisualCount = 6d;//10d 推测是可见数量的二倍
         private List<AnimImage> ElementList;
         private double CenterDegree = 180d;
         private double TotalDegree = 0;
@@ -211,24 +211,24 @@ namespace GamePluginLauncher.Carousel
             CompositionTarget.Rendering -= new EventHandler(CompositionTarget_Rendering);
         }
 
-        private void Carousel2DView_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (this.IsMouseDown)
-            {
-                this.CurrentX = e.GetPosition(this).X;
-                this.IntervalDegree = this.CurrentX - this.PreviousX;
-                this.TotalMoveDegree += Math.Abs(this.IntervalDegree * 0.5d);
-                this.InertiaDegree = this.IntervalDegree * 5d;
+        //private void Carousel2DView_MouseMove(object sender, MouseEventArgs e)
+        //{
+        //    if (this.IsMouseDown)
+        //    {
+        //        this.CurrentX = e.GetPosition(this).X;
+        //        this.IntervalDegree = this.CurrentX - this.PreviousX;
+        //        this.TotalMoveDegree += Math.Abs(this.IntervalDegree * 0.5d);
+        //        this.InertiaDegree = this.IntervalDegree * 5d;
 
-                for (int i = 0; i < this.ElementList.Count; i++)
-                {
-                    AnimImage oItem = this.ElementList[i];
-                    oItem.Degree += this.IntervalDegree;
-                }
-                this.UpdateLocation();
-                this.PreviousX = this.CurrentX;
-            }
-        }
+        //        for (int i = 0; i < this.ElementList.Count; i++)
+        //        {
+        //            AnimImage oItem = this.ElementList[i];
+        //            oItem.Degree += this.IntervalDegree;
+        //        }
+        //        this.UpdateLocation();
+        //        this.PreviousX = this.CurrentX;
+        //    }
+        //}
 
         private void Carousel2DView_MouseUp(object sender, MouseButtonEventArgs e)
         {

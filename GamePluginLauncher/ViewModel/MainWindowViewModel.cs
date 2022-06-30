@@ -20,32 +20,12 @@ namespace GamePluginLauncher.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        //public ObservableCollection<GameLauncher> GameLaunchers { get; set; }
-        //public MainWindowViewModel()
-        //{
-        //    GameLaunchers = new ObservableCollection<GameLauncher>()
-        //    {
-        //        new GameLauncher() { Name = "LOL" },
-        //        new GameLauncher() { Name = "CF" },
-        //        new GameLauncher() { Name = "DNF" },
-        //        new GameLauncher() { Name = "LSCS" }
-        //    };
-        //}
-
         
-
         private WindowState _windowState;
         public WindowState WindowState
         {
             get => _windowState;
             set => UpdateValue(ref _windowState, value);
-        }
-
-        private int _appListListBoxSelectedIndex;
-        public int AppListListBoxSelectedIndex
-        {
-            get => _appListListBoxSelectedIndex;
-            set => UpdateValue(ref _appListListBoxSelectedIndex, value);
         }
 
         private bool _windowTopmost;
@@ -74,6 +54,7 @@ namespace GamePluginLauncher.ViewModel
         public DelegateCommand? EditGameLauncherCommand { get; set; }
         public DelegateCommand? RenameGameLauncherCommand { get; set; }
         public DelegateCommand? ShowInExplorerCommand { get; set; }
+        public DelegateCommand? AddGamePluginCommand { get; set; }
 
         private void NewGameLauncher(object obj)
         {
@@ -139,6 +120,24 @@ namespace GamePluginLauncher.ViewModel
                 Arguments = "/e,/select," + gameLauncher.GamePlugins[0].Path
             }) ;
         }
+        private void AddGamePlugin(GameLauncher gameLauncher)
+        {
+            try
+            {
+                var ofd = new OpenFileDialog
+                {
+                    Filter = "应用程序|*.exe"
+                };
+                if (ofd.ShowDialog() == true)
+                {
+                    gameLauncher.AddPlugin(ofd.FileName);
+                }
+            }
+            catch (Exception e)
+            {
+                MsgBoxHelper.ShowError(e.Message);
+            }
+        }
 
         protected override void Init()
         {
@@ -155,6 +154,7 @@ namespace GamePluginLauncher.ViewModel
             EditGameLauncherCommand = new DelegateCommand<GameLauncher>(EditGameLauncher);
             RenameGameLauncherCommand = new DelegateCommand<GameLauncher>(RenameGameLauncher);
             ShowInExplorerCommand = new DelegateCommand<GameLauncher>(ShowInExplorer);
+            AddGamePluginCommand = new DelegateCommand<GameLauncher>(AddGamePlugin);
         }
     }
 }

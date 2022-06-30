@@ -87,7 +87,8 @@ namespace GamePluginLauncher.Model
             GameLaunchers.Add(new GameLauncher
             {
                 Name = name,
-                GamePlugins = new ObservableCollection<GamePlugin>()
+                GamePlugins = new ObservableCollection<GamePlugin>(),
+                SelectIndex = 0
             });
 
             GameLaunchers[GameLaunchers.Count - 1].AddPlugin("原生启动",path);
