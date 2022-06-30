@@ -14,6 +14,7 @@ namespace GamePluginLauncher.ViewModel
 {
     public class PluginSelectorViewModel:ViewModelBase
     {
+        public int GameLauncherIndex { get; set; }
         public DelegateCommand? OpenGamePluginCommand { get; set; }
         public DelegateCommand? EditGamePluginCommand { get; set; }
         public DelegateCommand? RemoveGamePluginCommand { get; set; }
