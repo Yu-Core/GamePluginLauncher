@@ -24,6 +24,12 @@ namespace GamePluginLauncher.Model
             get => _gamePlugins;
             set => UpdateValue(ref _gamePlugins, value);
         }
+        private int _selectIndex;
+        public int SelectIndex
+        {
+            get => _selectIndex;
+            set => UpdateValue(ref _selectIndex, value);
+        }
 
         public void AddPlugin(string name, string path)
         {

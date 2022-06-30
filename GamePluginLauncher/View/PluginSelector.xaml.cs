@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace GamePluginLauncher
+namespace GamePluginLauncher.View
 {
     /// <summary>
     /// PluginSelector.xaml 的交互逻辑

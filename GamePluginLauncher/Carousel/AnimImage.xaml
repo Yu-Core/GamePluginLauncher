@@ -24,7 +24,6 @@
             <TextBlock VerticalAlignment="Bottom" Margin="15,15" Foreground="White"
                    TextWrapping="Wrap" x:Name="TbkTitle" TextAlignment="Center"/>
         </Grid>
-        
     </materialDesign:Card>
     
     
