@@ -14,6 +14,13 @@ namespace GamePluginLauncher.ViewModel
 {
     public class PluginSelectorViewModel:ViewModelBase
     {
+        private int _launcherIndex;
+        public int LauncherIndex
+        {
+            get => _launcherIndex;
+            set => UpdateValue(ref _launcherIndex, value);
+        }
+
         public DelegateCommand? OpenGamePluginCommand { get; set; }
         public DelegateCommand? EditGamePluginCommand { get; set; }
         public DelegateCommand? RemoveGamePluginCommand { get; set; }

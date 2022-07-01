@@ -1,4 +1,5 @@
 ﻿using GamePluginLauncher.Carousel;
+using GamePluginLauncher.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,11 @@ namespace GamePluginLauncher.View
     /// </summary>
     public partial class PluginSelector : Window
     {
+        PluginSelectorViewModel pluginSelectorViewModel => (PluginSelectorViewModel)DataContext;
+        public int LauncherIndex
+        { 
+            set=> pluginSelectorViewModel.LauncherIndex = value;
+        }
         public PluginSelector()
         {
             InitializeComponent();

@@ -142,9 +142,12 @@ namespace GamePluginLauncher.ViewModel
                 MsgBoxHelper.ShowError(e.Message);
             }
         }
-        private void OpenGameLauncher(GameLauncher gameLauncher)
+        private void OpenGameLauncher(object index)
         {
-            var pluginSelector = new PluginSelector();
+            var pluginSelector = new PluginSelector()
+            {
+                LauncherIndex = (int)index
+            };
             pluginSelector.ShowDialog();
         }
         private void EditGameLauncherPath(object obj)
@@ -181,7 +184,7 @@ namespace GamePluginLauncher.ViewModel
             RenameGameLauncherCommand = new DelegateCommand<GameLauncher>(RenameGameLauncher);
             ShowInExplorerCommand = new DelegateCommand<GameLauncher>(ShowInExplorer);
             AddGamePluginCommand = new DelegateCommand<GameLauncher>(AddGamePlugin);
-            OpenGameLauncherCommand = new DelegateCommand<GameLauncher>(OpenGameLauncher);
+            OpenGameLauncherCommand = new DelegateCommand(OpenGameLauncher);
             EditGameLauncherPathCommand = new DelegateCommand(EditGameLauncherPath);
         }
     }
