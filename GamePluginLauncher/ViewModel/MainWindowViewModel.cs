@@ -1,5 +1,6 @@
 ﻿using GamePluginLauncher.Model;
 using GamePluginLauncher.Utils;
+using GamePluginLauncher.View;
 using GamePluginLauncher.View.Dialogs;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
@@ -14,13 +15,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace GamePluginLauncher.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        
+
         private WindowState _windowState;
         public WindowState WindowState
         {
@@ -55,6 +57,8 @@ namespace GamePluginLauncher.ViewModel
         public DelegateCommand? RenameGameLauncherCommand { get; set; }
         public DelegateCommand? ShowInExplorerCommand { get; set; }
         public DelegateCommand? AddGamePluginCommand { get; set; }
+        public DelegateCommand? OpenGameLauncherCommand { get; set; }
+        public DelegateCommand? EditGameLauncherPathCommand { get; set; }
 
         private void NewGameLauncher(object obj)
         {
@@ -118,7 +122,7 @@ namespace GamePluginLauncher.ViewModel
             Process.Start(new ProcessStartInfo("Explorer.exe")
             {
                 Arguments = "/e,/select," + gameLauncher.GamePlugins[0].Path
-            }) ;
+            });
         }
         private void AddGamePlugin(GameLauncher gameLauncher)
         {
@@ -138,7 +142,29 @@ namespace GamePluginLauncher.ViewModel
                 MsgBoxHelper.ShowError(e.Message);
             }
         }
-
+        private void OpenGameLauncher(GameLauncher gameLauncher)
+        {
+            var pluginSelector = new PluginSelector();
+            pluginSelector.ShowDialog();
+        }
+        private void EditGameLauncherPath(object obj)
+        {
+            try
+            {
+                var ofd = new OpenFileDialog
+                {
+                    Filter = "应用程序|*.exe"
+                };
+                if (ofd.ShowDialog() == true)
+                {
+                    ((TextBox)obj).Text = ofd.FileName;
+                }
+            }
+            catch (Exception ex)
+            {
+                MsgBoxHelper.ShowError(ex.Message);
+            }
+        }
         protected override void Init()
         {
             base.Init();
@@ -155,6 +181,8 @@ namespace GamePluginLauncher.ViewModel
             RenameGameLauncherCommand = new DelegateCommand<GameLauncher>(RenameGameLauncher);
             ShowInExplorerCommand = new DelegateCommand<GameLauncher>(ShowInExplorer);
             AddGamePluginCommand = new DelegateCommand<GameLauncher>(AddGamePlugin);
+            OpenGameLauncherCommand = new DelegateCommand<GameLauncher>(OpenGameLauncher);
+            EditGameLauncherPathCommand = new DelegateCommand(EditGameLauncherPath);
         }
     }
 }

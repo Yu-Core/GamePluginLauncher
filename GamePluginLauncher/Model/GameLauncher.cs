@@ -1,4 +1,5 @@
-﻿using GamePluginLauncher.Utils;
+﻿
+using GamePluginLauncher.Utils;
 using SimpleMvvm;
 using System;
 using System.Collections.Generic;
