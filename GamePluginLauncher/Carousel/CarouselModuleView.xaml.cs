@@ -21,20 +21,20 @@ namespace GamePluginLauncher.Carousel
     /// </summary>
     public partial class CarouselModuleView :UserControl
     {
-        private List<string> FileItems;
+        //private List<string> FileItems;
 
-        private void LoadImgList()
-        {
-            this.FileItems = new List<string>();
-            string sPath = AppDomain.CurrentDomain.BaseDirectory + "Imgs";
-            DirectoryInfo dir = new DirectoryInfo(sPath);
-            FileInfo[] fis = dir.GetFiles();
-            if (fis.Length > 0)
-            {
-                for (int j = 0; j < fis.Length; j++)
-                    this.FileItems.Add(fis[j].FullName);
-            }
-        }
+        //private void LoadImgList()
+        //{
+        //    this.FileItems = new List<string>();
+        //    string sPath = AppDomain.CurrentDomain.BaseDirectory + "Imgs";
+        //    DirectoryInfo dir = new DirectoryInfo(sPath);
+        //    FileInfo[] fis = dir.GetFiles();
+        //    if (fis.Length > 0)
+        //    {
+        //        for (int j = 0; j < fis.Length; j++)
+        //            this.FileItems.Add(fis[j].FullName);
+        //    }
+        //}
 
         public CarouselModuleView()
         {
