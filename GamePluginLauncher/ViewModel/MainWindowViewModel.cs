@@ -142,13 +142,19 @@ namespace GamePluginLauncher.ViewModel
                 MsgBoxHelper.ShowError(e.Message);
             }
         }
-        private void OpenGameLauncher(object index)
+        private async void OpenGameLauncher(object index)
         {
             var pluginSelector = new PluginSelector()
             {
                 LauncherIndex = (int)index
             };
             pluginSelector.ShowDialog();
+            //测试使用
+            //var dialog = new ErrorMessageDialog()
+            //{
+            //    DataContext = $"进入了第{index}个启动器"
+            //};
+            //await DialogHost.Show(dialog);
         }
         private void EditGameLauncherPath(object obj)
         {
