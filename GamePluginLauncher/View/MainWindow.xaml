@@ -74,7 +74,8 @@
                                         materialDesign:ButtonAssist.CornerRadius="10"
                                         BorderThickness="0"
                                         materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                                        Click="LauncherCard_Click">
+                                        Command="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel.OpenGameLauncherCommand}"
+                                        CommandParameter="{Binding}">
                                     <Grid Width="200"
                                           Height="120">
                                         <Grid.RowDefinitions>

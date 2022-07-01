@@ -7,7 +7,11 @@
              mc:Ignorable="d" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:converters="clr-namespace:GamePluginLauncher.Utils.Converters"
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:InputContentToIsNull x:Key="InputContentToIsNull"></converters:InputContentToIsNull>
+    </UserControl.Resources>
     <StackPanel Width="300" Margin="16">
         <TextBlock Text="重命名启动器" 
                    HorizontalAlignment="Left"
@@ -18,14 +22,14 @@
                  materialDesign:HintAssist.Hint="启动器名称"
                  Margin="0 8 0 0"
                  HorizontalAlignment="Stretch"
-                 Text="{Binding Name, Mode=OneWay}"/>
+                 Text="{Binding Name, Mode=OneWay}" Cursor="Arrow"/>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button Style="{StaticResource MaterialDesignFlatButton}"
-                    IsDefault="True"
+                    IsCancel="True"
                     Margin="0 8 8 0"
                     Content="取消"
                     HorizontalAlignment="Left"
@@ -36,10 +40,11 @@
             </Button>
             <Button Grid.Column="1"
                     Style="{StaticResource MaterialDesignFlatButton}"
-                    IsCancel="True"
+                    IsDefault="True"
                     Margin="0 8 8 0"
                     Content="保存"
                     HorizontalAlignment="Right"
+                    IsEnabled="{Binding ElementName=LauncherName, Path=Text, Converter={StaticResource InputContentToIsNull}}"
                     Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
                 <Button.CommandParameter>
                     <system:Boolean>True</system:Boolean>

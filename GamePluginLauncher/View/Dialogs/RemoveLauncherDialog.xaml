@@ -26,7 +26,6 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button Style="{StaticResource MaterialDesignFlatButton}"
-                    IsDefault="True"
                     Margin="0 8 8 0"
                     IsCancel="True"
                     Content="取消"
@@ -39,6 +38,7 @@
             <Button Grid.Column="1"
                     Style="{StaticResource MaterialDesignFlatButton}"
                     Foreground="Red"
+                    IsDefault="True"
                     Margin="0 8 8 0"
                     Content="删除"
                     HorizontalAlignment="Right"

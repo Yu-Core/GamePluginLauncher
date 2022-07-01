@@ -21,11 +21,11 @@ namespace GamePluginLauncher.Model
             get => _path;
             set => UpdateValue(ref _path, value);
         }
-        private string? _imagePath;
-        public string? ImagePath
+        private string? _backgroundPath;
+        public string? BackgroundPath
         {
-            get => _imagePath;
-            set => UpdateValue(ref _imagePath, value);
+            get => _backgroundPath;
+            set => UpdateValue(ref _backgroundPath, value);
         }
     }
 }
