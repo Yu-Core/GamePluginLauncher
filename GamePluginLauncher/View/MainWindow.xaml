@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
         xmlns:system="clr-namespace:System;assembly=mscorlib"
-        xmlns:model="clr-namespace:GamePluginLauncher.Model"
+        xmlns:model="clr-namespace:GamePluginLauncher.Model" 
+        xmlns:converters="clr-namespace:GamePluginLauncher.Utils.Converters"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
@@ -20,6 +21,9 @@
         DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
         Topmost="{Binding WindowTopmost}"
         WindowState="{Binding WindowState}">
+    <Window.Resources>
+        <converters:GameLaunchersItemToIndex x:Key="GameLaunchersItemToIndex"></converters:GameLaunchersItemToIndex>
+    </Window.Resources>
     <materialDesign:DialogHost DialogTheme="Inherit">
         <Grid>
             <Grid.RowDefinitions>
@@ -74,8 +78,13 @@
                                         materialDesign:ButtonAssist.CornerRadius="10"
                                         BorderThickness="0"
                                         materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                                        Command="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel.OpenGameLauncherCommand}"
-                                        CommandParameter="{Binding}">
+                                        Command="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel.OpenGameLauncherCommand}">
+                                    <Button.CommandParameter>
+                                        <MultiBinding Converter="{StaticResource GameLaunchersItemToIndex}">
+                                            <Binding></Binding>
+                                            <Binding Source="{x:Static model:StaticData.GameLaunchers}" ></Binding>
+                                        </MultiBinding>
+                                    </Button.CommandParameter>
                                     <Grid Width="200"
                                           Height="120">
                                         <Grid.RowDefinitions>
@@ -119,7 +128,7 @@
                                         <StackPanel Grid.Row="1" 
                                                     Width="200"
                                                     Orientation="Horizontal"
-                                                    VerticalAlignment="Top">        
+                                                    VerticalAlignment="Top">
                                             <Image  Height="70"
                                                     Width="70"
                                                     Stretch="UniformToFill"
@@ -141,12 +150,9 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                <!--</WrapPanel>-->
+                    <!--</WrapPanel>-->
                 </ScrollViewer>
             </Border>
         </Grid>
     </materialDesign:DialogHost>
-
-
-
 </Window>
