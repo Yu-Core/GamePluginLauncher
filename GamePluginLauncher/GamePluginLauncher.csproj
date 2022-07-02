@@ -15,10 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Image\LSCS.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="LnkReader" Version="1.0.1" />
     <PackageReference Include="MaterialDesignThemes" Version="4.5.0" />
     <PackageReference Include="Mzying2001.SimpleMvvm" Version="1.0.5" />
@@ -28,6 +24,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Image\LichKing.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Image\LSCS.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

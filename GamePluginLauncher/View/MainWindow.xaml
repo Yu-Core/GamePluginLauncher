@@ -21,9 +21,6 @@
         DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
         Topmost="{Binding WindowTopmost}"
         WindowState="{Binding WindowState}">
-    <Window.Resources>
-        <converters:GameLaunchersItemToIndex x:Key="GameLaunchersItemToIndex"></converters:GameLaunchersItemToIndex>
-    </Window.Resources>
     <materialDesign:DialogHost DialogTheme="Inherit">
         <Grid>
             <Grid.RowDefinitions>
@@ -78,13 +75,8 @@
                                         materialDesign:ButtonAssist.CornerRadius="10"
                                         BorderThickness="0"
                                         materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                                        Command="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel.OpenGameLauncherCommand}">
-                                    <Button.CommandParameter>
-                                        <MultiBinding Converter="{StaticResource GameLaunchersItemToIndex}">
-                                            <Binding></Binding>
-                                            <Binding Source="{x:Static model:StaticData.GameLaunchers}" ></Binding>
-                                        </MultiBinding>
-                                    </Button.CommandParameter>
+                                        Command="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel.OpenGameLauncherCommand}"
+                                        CommandParameter="{Binding Path=Id}">
                                     <Grid Width="200"
                                           Height="120">
                                         <Grid.RowDefinitions>

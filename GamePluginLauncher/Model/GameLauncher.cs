@@ -12,6 +12,12 @@ namespace GamePluginLauncher.Model
 {
     public class GameLauncher : NotificationObject
     {
+        private int _id;
+        public int Id
+        {
+            get => _id;
+            set => UpdateValue(ref _id, value);
+        }
         private string? _name;
         public string? Name
         {
@@ -36,7 +42,7 @@ namespace GamePluginLauncher.Model
         {
             if (GamePlugins == null)
                 GamePlugins = new ObservableCollection<GamePlugin>();
-            GamePlugins.Add(new GamePlugin { Name = name, Path = path });
+            GamePlugins.Add(new GamePlugin { Name = name, Path = path,BackgroundPath = "pack://application:,,,/Image/LichKing.jpg" });
         }
 
         public void AddPlugin(string path)

@@ -84,8 +84,12 @@ namespace GamePluginLauncher.Model
 
             var name = PathHelper.GetFileNameWithoutSuffix(path);
 
+            int count = StaticData.GameLaunchers.Count;
+            int id = count > 0 ? StaticData.GameLaunchers[count - 1].Id + 1 : 0;
+
             GameLaunchers.Add(new GameLauncher
             {
+                Id = id,
                 Name = name,
                 GamePlugins = new ObservableCollection<GamePlugin>(),
                 SelectIndex = 0

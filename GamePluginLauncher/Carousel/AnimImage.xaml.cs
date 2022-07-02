@@ -75,23 +75,16 @@ namespace GamePluginLauncher.Carousel
             if (!IsUiLoaded)
             {
                 IsUiLoaded = true;
-                try
-                {
-                    if (File.Exists(FileSrc))
-                        this.ImgMain.Source = new BitmapImage(new Uri(FileSrc));
-                }
-                catch { }
-
-                //Console.WriteLine(DateTime.Now.ToLongTimeString());
+                
+                this.ImgMain.Source = new BitmapImage(new Uri(FileSrc));
             }
         }
 
-        public AnimImage(string sFile)
+        public AnimImage(string Name,string BackgroundPath)
         {
             InitializeComponent();
-            this.FileSrc = sFile;
-            string sFileName = System.IO.Path.GetFileNameWithoutExtension(sFile);
-            this.TbkTitle.Text = sFileName;
+            this.FileSrc = BackgroundPath;
+            this.TbkTitle.Text = Name;
             this.Loaded += ImageItem_Loaded;
             this.DataContext = this;
         }
@@ -102,9 +95,9 @@ namespace GamePluginLauncher.Carousel
             AsynchUtils.AsynchSleepExecuteFunc(this.Dispatcher, LoadUiImmediate, 0.5);
         }
 
-        public void Dispose()
-        {
-            this.ImgMain.Source = null;
-        }
+        //public void Dispose()
+        //{
+        //    this.ImgMain.Source = null;
+        //}
     }
 }

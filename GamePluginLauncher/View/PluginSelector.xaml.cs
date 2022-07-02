@@ -22,9 +22,9 @@ namespace GamePluginLauncher.View
     public partial class PluginSelector : Window
     {
         PluginSelectorViewModel pluginSelectorViewModel => (PluginSelectorViewModel)DataContext;
-        public int LauncherIndex
+        public int LauncherID
         { 
-            set=> pluginSelectorViewModel.LauncherIndex = value;
+            set=> pluginSelectorViewModel.LauncherID = value;
         }
         public PluginSelector()
         {
