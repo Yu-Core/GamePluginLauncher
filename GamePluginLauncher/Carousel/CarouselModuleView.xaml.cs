@@ -1,45 +1,31 @@
-﻿using System;
+﻿using GamePluginLauncher.Model;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace GamePluginLauncher.Carousel
 {
     /// <summary>
     /// CarouselModuleView.xaml 的交互逻辑
     /// </summary>
-    public partial class CarouselModuleView :UserControl
+    public partial class CarouselModuleView : UserControl
     {
-        private List<string> FileItems;
+        public GameLauncher gameLauncher => (GameLauncher)DataContext;
 
-        private void LoadImgList()
+        public ObservableCollection<GamePlugin> plugins
         {
-            this.FileItems = new List<string>();
-            string sPath = AppDomain.CurrentDomain.BaseDirectory + "Imgs";
-            DirectoryInfo dir = new DirectoryInfo(sPath);
-            FileInfo[] fis = dir.GetFiles();
-            if (fis.Length > 0)
-            {
-                for (int j = 0; j < fis.Length; j++)
-                    this.FileItems.Add(fis[j].FullName);
-            }
+            get => gameLauncher.GamePlugins;
         }
-
         public CarouselModuleView()
         {
             InitializeComponent();
-            this.LoadImgList();
+            //this.LoadImgList();
             this.Loaded += CarouselModuleView_Loaded;
             this.Unloaded += CarouselModuleView_Unloaded;
         }
@@ -92,14 +78,31 @@ namespace GamePluginLauncher.Carousel
 
         private void CreateElements()
         {
-            double dAverageDegree = 360d / VisualCount;
-            this.TotalDegree = this.FileItems.Count * dAverageDegree;
-
-            this.ElementList = new List<AnimImage>();
-            for (int i = 0; i < this.FileItems.Count; i++)
+            //设计模式时可见，如果没有设计模式时会报错，但可以运行
+            if (DesignerProperties.GetIsInDesignMode(this))
             {
-                string sFile = this.FileItems[i];
-                AnimImage oItem = new AnimImage(sFile);
+                DataContext = new GameLauncher()
+                {
+                    SelectIndex = 0,
+                    Name = "启动器",
+                    Id = 0,
+                    GamePlugins = new ObservableCollection<GamePlugin>()
+                    {
+                        new GamePlugin(){BackgroundPath=Directory.GetCurrentDirectory()+"\\GamePluginLauncher\\Image\\LichKing.jpg",Name="1号",Path=""},
+                        new GamePlugin(){BackgroundPath=Directory.GetCurrentDirectory()+"\\GamePluginLauncher\\Image\\LichKing.jpg",Name="2号",Path=""},
+                        new GamePlugin(){BackgroundPath=Directory.GetCurrentDirectory()+"\\GamePluginLauncher\\Image\\LichKing.jpg",Name="3号",Path=""}
+                    }
+                };
+            }
+            double dAverageDegree = 360d / VisualCount;
+
+            this.TotalDegree = plugins.Count * dAverageDegree;
+            this.ElementList = new List<AnimImage>();
+            for (int i = 0; i < plugins.Count; i++)
+            {
+                string BackgroundPath = plugins[i].BackgroundPath;
+                string Name = plugins[i].Name;
+                AnimImage oItem = new AnimImage(Name,BackgroundPath);
                 oItem.MouseLeftButtonDown += OItem_MouseLeftButtonDown;
                 oItem.MouseLeftButtonUp += OItem_MouseLeftButtonUp;
                 oItem.Width = this.ElementWidth;

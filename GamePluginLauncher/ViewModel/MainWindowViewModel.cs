@@ -142,11 +142,11 @@ namespace GamePluginLauncher.ViewModel
                 MsgBoxHelper.ShowError(e.Message);
             }
         }
-        private async void OpenGameLauncher(object index)
+        private async void OpenGameLauncher(object id)
         {
             var pluginSelector = new PluginSelector()
             {
-                LauncherIndex = (int)index
+                LauncherID = (int)id
             };
             pluginSelector.ShowDialog();
             //测试使用
