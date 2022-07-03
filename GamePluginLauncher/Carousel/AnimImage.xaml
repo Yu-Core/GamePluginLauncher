@@ -8,7 +8,7 @@
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              Background="{DynamicResource MaterialDesignPaper}"
              TextElement.FontWeight="Medium"
-             TextElement.FontSize="14"
+             TextElement.FontSize="15"
              FontFamily="YouYuan"
              mc:Ignorable="d" Width="260" Height="180" 
              d:DesignHeight="300" d:DesignWidth="300" RenderTransformOrigin="0.5 0.5">
@@ -21,10 +21,8 @@
     <materialDesign:Card UniformCornerRadius="20" ClipContent="True">
         <Grid>
             <Image  Stretch="UniformToFill" x:Name="ImgMain" Height="250"/>
-            <TextBlock VerticalAlignment="Bottom" Margin="15,15" Foreground="White"
+            <TextBlock VerticalAlignment="Bottom" Margin="15,20" Foreground="White"
                    TextWrapping="Wrap" x:Name="TbkTitle" TextAlignment="Center"/>
         </Grid>
     </materialDesign:Card>
-    
-    
 </UserControl>

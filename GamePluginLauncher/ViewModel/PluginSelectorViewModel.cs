@@ -14,11 +14,11 @@ namespace GamePluginLauncher.ViewModel
 {
     public class PluginSelectorViewModel:ViewModelBase
     {
-        private int _launcherID=0;
+        private int _launcherID;
         public int LauncherID
         {
             get => _launcherID;
-            set => UpdateValue(ref _launcherID, value);
+            set => UpdateValue(ref _launcherID,value);
         }
 
         public DelegateCommand? OpenGamePluginCommand { get; set; }

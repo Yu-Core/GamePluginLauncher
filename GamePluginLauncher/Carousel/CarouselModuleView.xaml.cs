@@ -44,6 +44,7 @@ namespace GamePluginLauncher.Carousel
             this.GdRoot.MouseLeftButtonDown += GdRoot_MouseLeftButtonDown;
             //this.MouseMove += Carousel2DView_MouseMove;
             this.MouseUp += Carousel2DView_MouseUp;
+            RotateToSelectItem();
         }
 
         #region Create Elements
@@ -78,7 +79,7 @@ namespace GamePluginLauncher.Carousel
 
         private void CreateElements()
         {
-            //设计模式时可见，如果没有设计模式时会报错，但可以运行
+            //设计模式时可见，如果没有会报错，但可以运行
             if (DesignerProperties.GetIsInDesignMode(this))
             {
                 DataContext = new GameLauncher()
@@ -103,6 +104,7 @@ namespace GamePluginLauncher.Carousel
                 string BackgroundPath = plugins[i].BackgroundPath;
                 string Name = plugins[i].Name;
                 AnimImage oItem = new AnimImage(Name,BackgroundPath);
+                oItem.Index = i;
                 oItem.MouseLeftButtonDown += OItem_MouseLeftButtonDown;
                 oItem.MouseLeftButtonUp += OItem_MouseLeftButtonUp;
                 oItem.Width = this.ElementWidth;
@@ -127,7 +129,16 @@ namespace GamePluginLauncher.Carousel
                 if (this.InertiaDegree != 0)
                     CompositionTarget.Rendering += new EventHandler(CompositionTarget_Rendering);
                 e.Handled = true;
+                gameLauncher.SelectIndex = ((AnimImage)sender).Index;
             }
+        }
+
+        private void RotateToSelectItem()
+        {
+            int selectindex = gameLauncher.SelectIndex;
+            this.InertiaDegree = CenterDegree - ElementList[selectindex].Degree;
+            if (this.InertiaDegree != 0)
+                CompositionTarget.Rendering += new EventHandler(CompositionTarget_Rendering);
         }
 
         private void OItem_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -141,7 +152,9 @@ namespace GamePluginLauncher.Carousel
             {
                 AnimImage oItem = this.ElementList[i];
 
-                if (oItem.Degree - this.CenterDegree >= this.TotalDegree / 2d)
+                if (this.ElementList.Count == 1)
+                    oItem.Degree = 180;
+                else if (oItem.Degree - this.CenterDegree >= this.TotalDegree / 2d)
                     oItem.Degree -= this.TotalDegree;
                 else if (this.CenterDegree - oItem.Degree > this.TotalDegree / 2d)
                     oItem.Degree += this.TotalDegree;

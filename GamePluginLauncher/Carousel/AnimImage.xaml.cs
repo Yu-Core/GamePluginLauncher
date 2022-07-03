@@ -21,6 +21,7 @@ namespace GamePluginLauncher.Carousel
     /// </summary>
     public partial class AnimImage : UserControl
     {
+        public int Index { get; set; }
         public double X
         {
             get { return (double)GetValue(XProperty); }
