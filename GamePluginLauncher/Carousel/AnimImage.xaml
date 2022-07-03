@@ -4,12 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GamePluginLauncher.Carousel"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:custom="clr-namespace:GamePluginLauncher.View.Custom"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              Background="{DynamicResource MaterialDesignPaper}"
              TextElement.FontWeight="Medium"
-             TextElement.FontSize="15"
-             FontFamily="YouYuan"
+             TextElement.FontSize="16"
+             FontFamily="Microsoft YaHei UI"
              mc:Ignorable="d" Width="260" Height="180" 
              d:DesignHeight="300" d:DesignWidth="300" RenderTransformOrigin="0.5 0.5">
     <UserControl.RenderTransform>
@@ -21,8 +21,20 @@
     <materialDesign:Card UniformCornerRadius="20" ClipContent="True">
         <Grid>
             <Image  Stretch="UniformToFill" x:Name="ImgMain" Height="250"/>
-            <TextBlock VerticalAlignment="Bottom" Margin="15,20" Foreground="White"
-                   TextWrapping="Wrap" x:Name="TbkTitle" TextAlignment="Center"/>
+
+            <TextBlock x:Name="TbkTitle" 
+                       Padding="0,5"
+                       VerticalAlignment="Bottom" 
+                       Margin="0,20" 
+                       Background="Black"
+                       Opacity="0.7"
+                       Foreground="White"
+                       FontWeight="UltraBold"
+                       TextWrapping="Wrap"
+                       materialDesign:TextBlockAssist.AutoToolTip="True"
+                       TextAlignment="Center">
+            </TextBlock>
+            
         </Grid>
     </materialDesign:Card>
 </UserControl>

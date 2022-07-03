@@ -76,8 +76,13 @@ namespace GamePluginLauncher.Carousel
             if (!IsUiLoaded)
             {
                 IsUiLoaded = true;
-                
-                this.ImgMain.Source = new BitmapImage(new Uri(FileSrc));
+
+                try
+                {
+                    if (File.Exists(FileSrc))
+                        this.ImgMain.Source = new BitmapImage(new Uri(FileSrc));
+                }
+                catch { }
             }
         }
 

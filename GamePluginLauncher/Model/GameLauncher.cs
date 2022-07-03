@@ -42,7 +42,12 @@ namespace GamePluginLauncher.Model
         {
             if (GamePlugins == null)
                 GamePlugins = new ObservableCollection<GamePlugin>();
-            GamePlugins.Add(new GamePlugin { Name = name, Path = path,BackgroundPath = "pack://application:,,,/Image/LichKing.jpg" });
+            GamePlugins.Add(new GamePlugin
+            {
+                Name = name,
+                Path = path,
+                BackgroundPath = ImageHelper.GetRandomBackground()
+            });
         }
 
         public void AddPlugin(string path)
