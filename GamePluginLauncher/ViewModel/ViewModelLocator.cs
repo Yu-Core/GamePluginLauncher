@@ -14,7 +14,7 @@ namespace GamePluginLauncher.ViewModel
         {
             get => GetInstance<MainWindowViewModel>();
         }
-        public PluginSelectorViewModel PluginSelectorViewModel
+        public PluginSelectorViewModel  PluginSelectorViewModel
         {
             get => GetInstance<PluginSelectorViewModel>();
         }
