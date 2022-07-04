@@ -89,9 +89,9 @@ namespace GamePluginLauncher.Carousel
                     Id = 0,
                     GamePlugins = new ObservableCollection<GamePlugin>()
                     {
-                        new GamePlugin(){BackgroundPath=Directory.GetCurrentDirectory()+"\\GamePluginLauncher\\Image\\LichKing.jpg",Name="1号",Path=""},
-                        new GamePlugin(){BackgroundPath=Directory.GetCurrentDirectory()+"\\GamePluginLauncher\\Image\\LichKing.jpg",Name="2号",Path=""},
-                        new GamePlugin(){BackgroundPath=Directory.GetCurrentDirectory()+"\\GamePluginLauncher\\Image\\LichKing.jpg",Name="3号",Path=""}
+                        new GamePlugin(){BackgroundPath=Directory.GetCurrentDirectory()+"\\GamePluginLauncher\\Image\\background1.jpg",Name="1号",Path=""},
+                        new GamePlugin(){BackgroundPath=Directory.GetCurrentDirectory()+"\\GamePluginLauncher\\Image\\background2.jpg",Name="2号",Path=""},
+                        new GamePlugin(){BackgroundPath=Directory.GetCurrentDirectory()+"\\GamePluginLauncher\\Image\\background3.jpg",Name="3号",Path=""}
                     }
                 };
             }
@@ -111,6 +111,7 @@ namespace GamePluginLauncher.Carousel
                 oItem.Height = this.ElementHeight;
                 oItem.Y = 0d;
                 oItem.Degree = i * dAverageDegree;
+                oItem.Is180 = false;
                 this.ElementList.Add(oItem);
             }
 
@@ -203,6 +204,15 @@ namespace GamePluginLauncher.Carousel
             double dScale = GetScaledSize(oItem.Degree);
             oItem.ScaleX = dScale;
             oItem.ScaleY = dScale;
+
+            if (Math.Abs(oItem.Degree - 180d) < 5)
+            {
+                oItem.Is180 = true;
+            }
+            else
+            {
+                oItem.Is180 = false;
+            }
             int nZIndex = GetZValue(oItem.Degree);
             Canvas.SetZIndex(oItem, nZIndex);
         }

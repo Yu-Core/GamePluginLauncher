@@ -29,10 +29,6 @@ namespace GamePluginLauncher.View
         public PluginSelector()
         {
             InitializeComponent();
-            //Unloaded += (s, e) =>
-            //{
-            //    this.DataContext = null;
-            //};
             
         }
     }

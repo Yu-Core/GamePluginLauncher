@@ -142,7 +142,7 @@ namespace GamePluginLauncher.ViewModel
                 MsgBoxHelper.ShowError(e.Message);
             }
         }
-        private async void OpenGameLauncher(object id)
+        private void OpenGameLauncher(object id)
         {
             var pluginSelector = new PluginSelector()
             {
