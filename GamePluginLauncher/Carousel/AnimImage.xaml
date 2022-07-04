@@ -4,37 +4,231 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GamePluginLauncher.Carousel"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:custom="clr-namespace:GamePluginLauncher.View.Custom"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:wms="clr-namespace:WpfMultiStyle;assembly=WpfMultiStyle"
+             xmlns:converters="clr-namespace:GamePluginLauncher.Utils.Converters" xmlns:system="clr-namespace:System;assembly=netstandard"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              Background="{DynamicResource MaterialDesignPaper}"
              TextElement.FontWeight="Medium"
              TextElement.FontSize="16"
              FontFamily="Microsoft YaHei UI"
-             mc:Ignorable="d" Width="260" Height="180" 
-             d:DesignHeight="300" d:DesignWidth="300" RenderTransformOrigin="0.5 0.5">
+             mc:Ignorable="d" Width="260" Height="180"
+             x:Name="UserControl"
+             d:DesignHeight="250" d:DesignWidth="444" RenderTransformOrigin="0.5 0.5">
     <UserControl.RenderTransform>
         <TransformGroup>
             <ScaleTransform ScaleX="{Binding Path=ScaleX}" ScaleY="{Binding Path=ScaleY}"/>
             <TranslateTransform X="{Binding Path=X}" Y="{Binding Path=Y}"/>
         </TransformGroup>
     </UserControl.RenderTransform>
-    <materialDesign:Card UniformCornerRadius="20" ClipContent="True">
-        <Grid>
-            <Image  Stretch="UniformToFill" x:Name="ImgMain" Height="250"/>
-
-            <TextBlock x:Name="TbkTitle" 
+    <UserControl.Resources>
+        <converters:AnimImageToVisibility x:Key="AnimImageToVisibility"></converters:AnimImageToVisibility>
+        <converters:DegreeToVisibility x:Key="DegreeToVisibility"></converters:DegreeToVisibility>
+        <converters:InputContentToIsNull x:Key="InputContentToIsNull"></converters:InputContentToIsNull>
+    </UserControl.Resources>
+    <materialDesign:Flipper Style="{StaticResource MaterialDesignCardFlipper}"
+                            materialDesign:ShadowAssist.ShadowDepth="Depth0">
+        <materialDesign:Flipper.FrontContent>
+            <materialDesign:Card UniformCornerRadius="20" ClipContent="True" >
+                <!--鼠标悬停样式，悬停在用户控件时显示EditPlugin和DeletePlugin两个按钮-->
+                <materialDesign:Card.Resources>
+                    <Style x:Key="BtnVisibility" TargetType="{x:Type Button}">
+                        <Setter Property="Visibility" Value="Hidden"></Setter>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Source={x:Reference UserControl},Path=IsMouseOver}" Value="true" ></Condition>
+                                    <Condition Binding="{Binding Source={x:Reference UserControl},Path=Is180}" Value="true"></Condition>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Visibility" Value="Visible"></Setter>
+                            </MultiDataTrigger>
+                            <DataTrigger Binding="{Binding Source={x:Reference UserControl},Path=IsMouseOver}" Value="false">
+                                <Setter Property="Visibility" Value="Hidden"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Source={x:Reference UserControl},Path=Is180}" Value="false">
+                                <Setter Property="Visibility" Value="Hidden"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </materialDesign:Card.Resources>
+                <Grid  x:Name="GridContainer">
+                    <Image  Stretch="UniformToFill" x:Name="ImgMain" Height="250"/>
+                    <TextBlock x:Name="TbkTitle" 
                        Padding="0,5"
                        VerticalAlignment="Bottom" 
                        Margin="0,20" 
                        Background="Black"
-                       Opacity="0.7"
+                       Opacity="0.6"
                        Foreground="White"
                        FontWeight="UltraBold"
                        TextWrapping="Wrap"
                        materialDesign:TextBlockAssist.AutoToolTip="True"
                        TextAlignment="Center">
-            </TextBlock>
-            
-        </Grid>
-    </materialDesign:Card>
+                    </TextBlock>
+                    <Button x:Name="EditPlugin"
+                            Style="{wms:MultiStyle BtnVisibility MaterialDesignIconButton}"
+                            ToolTip="修改插件配置" Cursor="Hand"
+                            Background="{StaticResource MaterialDesignDarkBackground}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Command="{x:Static materialDesign:Flipper.FlipCommand}" >
+                        <materialDesign:PackIcon Kind="Rotate3dVariant"
+                                         Width="50"
+                                         Height="50"
+                                         Foreground="White"/>
+                    </Button>
+                    <Button x:Name="DeletePlugin"
+                    Style="{wms:MultiStyle BtnVisibility MaterialDesignIconButton}"
+                    ToolTip="删除插件" Cursor="Hand"
+                    Margin="0,0,0,0"
+                    Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top">
+                        <materialDesign:PackIcon Kind="CloseThick"
+                                         Height="25"
+                                         Width="25"
+                                         Foreground="White">
+                        </materialDesign:PackIcon>
+                    </Button>
+                </Grid>
+            </materialDesign:Card>
+        </materialDesign:Flipper.FrontContent>
+        <materialDesign:Flipper.BackContent>
+            <materialDesign:Card UniformCornerRadius="20" ClipContent="True">
+                <Grid Height="Auto"
+                      Width="Auto">  
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <materialDesign:ColorZone Mode="PrimaryMid"
+                                              Padding="6">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{StaticResource MaterialDesignToolForegroundButton}"
+                                    Command="{x:Static materialDesign:Flipper.FlipCommand}"
+                                    HorizontalAlignment="Left">
+                                <materialDesign:PackIcon Kind="ArrowLeft"
+                                                         HorizontalAlignment="Right"
+                                                         Width="20"
+                                                         Height="20"/>
+                            </Button>
+                            <TextBlock Margin="8 0 0 0"
+                                       VerticalAlignment="Center"
+                                       Text="修改插件配置" />
+                        </StackPanel>
+                    </materialDesign:ColorZone>
+                    <Grid Grid.Row="1"
+                          Margin="24,0,24,8"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch">
+                        <Grid.Resources>
+                            <Style x:Key="StyleHeader" TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignCaptionTextBlock}">
+                                <Setter Property="VerticalAlignment" Value="Bottom" />
+                                <Setter Property="HorizontalAlignment" Value="Left" />
+                                <Setter Property="Margin" Value="0 0 8 0" />
+                                <Setter Property="Opacity" Value="0.7" />
+                                <Setter Property="FontSize" Value="15"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="0"
+                                   Style="{StaticResource StyleHeader}"
+                                   Text="插件名称">
+                        </TextBlock>
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="0"
+                                   Style="{StaticResource StyleHeader}"
+                                   Text="插件路径">
+                        </TextBlock>
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="0"
+                                   Style="{StaticResource StyleHeader}"
+                                   Text="图片路径">
+                        </TextBlock>
+                        <Button Grid.Row="3"
+                                Grid.Column="0" 
+                                Style="{StaticResource MaterialDesignFlatButton}"
+                                IsCancel="True"
+                                Margin="0,8,0,0"
+                                Content="取消"
+                                FontSize="15"
+                                HorizontalAlignment="Left">
+                        </Button>
+                        <TextBox Grid.Row="0"
+                                 Grid.Column="1"
+                                 x:Name="txtPluginName"
+                                 VerticalAlignment="Bottom">
+                        </TextBox>
+                        <Grid Grid.Row="1"
+                              Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBox VerticalAlignment="Bottom"
+                                     x:Name="txtPluginPath">
+                            </TextBox>
+                            <Button Grid.Column="1"
+                                    Style="{StaticResource MaterialDesignToolButton}"
+                                    Padding="0"
+                                    VerticalAlignment="Bottom">
+                                <materialDesign:PackIcon  
+                                     Kind="FolderOutline"
+                                     Width="25"
+                                     Height="25">
+                                </materialDesign:PackIcon>
+                            </Button>
+                        </Grid>
+                        <Grid Grid.Row="2"
+                              Grid.Column="1"
+                              VerticalAlignment="Bottom">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBox VerticalAlignment="Bottom"
+                                     x:Name="txtBackgroundPath">
+                            </TextBox>
+                            <Button Grid.Column="1"
+                                    Style="{StaticResource MaterialDesignToolButton}"
+                                    Padding="0"
+                                    VerticalAlignment="Bottom">
+                                <materialDesign:PackIcon Kind="FolderOutline"
+                                                         Width="25"
+                                                         Height="25">   
+                                </materialDesign:PackIcon>
+                            </Button>
+                        </Grid>
+                        <Button Grid.Row="3"
+                                Grid.Column="1" 
+                                Style="{StaticResource MaterialDesignFlatButton}"
+                                IsDefault="True"
+                                Margin="0,8,0,0"
+                                Content="保存"
+                                FontSize="15"
+                                HorizontalAlignment="Right">
+                            <Button.IsEnabled>
+                                <MultiBinding Converter="{StaticResource BooleanAllConverter}">
+                                    <Binding Source="{x:Reference txtPluginName}" Path="Text" Converter="{StaticResource InputContentToIsNull}"/>
+                                    <Binding Source="{x:Reference txtPluginPath}" Path="Text" Converter="{StaticResource InputContentToIsNull}"/>
+                                    <Binding Source="{x:Reference txtBackgroundPath}" Path="Text" Converter="{StaticResource InputContentToIsNull}"/>
+                                </MultiBinding>
+                            </Button.IsEnabled>
+                        </Button>
+                    </Grid>
+                </Grid>
+            </materialDesign:Card>
+        </materialDesign:Flipper.BackContent>
+    </materialDesign:Flipper>
+    
 </UserControl>
