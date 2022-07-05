@@ -241,7 +241,9 @@
                             <Button Grid.Column="1"
                                     Style="{StaticResource MaterialDesignToolButton}"
                                     Padding="0"
-                                    VerticalAlignment="Bottom">
+                                    VerticalAlignment="Bottom"
+                                    Command="{Binding EditBackgroundPathCommand}"
+                                    CommandParameter="{x:Reference txtBackgroundPath}">
                                 <materialDesign:PackIcon Kind="FolderOutline"
                                                          Width="25"
                                                          Height="25">   
