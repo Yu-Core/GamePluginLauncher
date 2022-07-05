@@ -6,7 +6,10 @@
              xmlns:local="clr-namespace:GamePluginLauncher.Carousel"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:wms="clr-namespace:WpfMultiStyle;assembly=WpfMultiStyle"
-             xmlns:converters="clr-namespace:GamePluginLauncher.Utils.Converters" xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:model="clr-namespace:GamePluginLauncher.Model" 
+             xmlns:converters="clr-namespace:GamePluginLauncher.Utils.Converters" 
+             xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              Background="{DynamicResource MaterialDesignPaper}"
              TextElement.FontWeight="Medium"
@@ -22,15 +25,16 @@
         </TransformGroup>
     </UserControl.RenderTransform>
     <UserControl.Resources>
-        <converters:AnimImageToVisibility x:Key="AnimImageToVisibility"></converters:AnimImageToVisibility>
-        <converters:DegreeToVisibility x:Key="DegreeToVisibility"></converters:DegreeToVisibility>
+        <converters:InvertBooleanAllConverter x:Key="InvertBooleanAllConverter"></converters:InvertBooleanAllConverter>
         <converters:InputContentToIsNull x:Key="InputContentToIsNull"></converters:InputContentToIsNull>
+        <converters:TextToIsChange x:Key="TextToIsChange"></converters:TextToIsChange>
     </UserControl.Resources>
-    <materialDesign:Flipper Style="{StaticResource MaterialDesignCardFlipper}"
+    <materialDesign:Flipper x:Name="FlipperContainer"
+                            Style="{StaticResource MaterialDesignCardFlipper}"
                             materialDesign:ShadowAssist.ShadowDepth="Depth0">
         <materialDesign:Flipper.FrontContent>
             <materialDesign:Card UniformCornerRadius="20" ClipContent="True" >
-                <!--鼠标悬停样式，悬停在用户控件时显示EditPlugin和DeletePlugin两个按钮-->
+                <!--鼠标悬停样式，悬停在用户控件时显示EditPlugin和DeletePlugin两个按钮,也可以用绑定实现-->
                 <materialDesign:Card.Resources>
                     <Style x:Key="BtnVisibility" TargetType="{x:Type Button}">
                         <Setter Property="Visibility" Value="Hidden"></Setter>
@@ -54,16 +58,17 @@
                 <Grid  x:Name="GridContainer">
                     <Image  Stretch="UniformToFill" x:Name="ImgMain" Height="250"/>
                     <TextBlock x:Name="TbkTitle" 
-                       Padding="0,5"
-                       VerticalAlignment="Bottom" 
-                       Margin="0,20" 
-                       Background="Black"
-                       Opacity="0.6"
-                       Foreground="White"
-                       FontWeight="UltraBold"
-                       TextWrapping="Wrap"
-                       materialDesign:TextBlockAssist.AutoToolTip="True"
-                       TextAlignment="Center">
+                               Padding="0,5"
+                               VerticalAlignment="Bottom" 
+                               Margin="0,20" 
+                               Background="Black"
+                               Opacity="0.6"
+                               Foreground="White"
+                               FontWeight="UltraBold"
+                               TextWrapping="Wrap"
+                               materialDesign:TextBlockAssist.AutoToolTip="True"
+                               TextAlignment="Center"
+                               Text="{Binding Path=GamePlugin.Name, Mode=OneWay}">
                     </TextBlock>
                     <Button x:Name="EditPlugin"
                             Style="{wms:MultiStyle BtnVisibility MaterialDesignIconButton}"
@@ -104,13 +109,19 @@
                     <materialDesign:ColorZone Mode="PrimaryMid"
                                               Padding="6">
                         <StackPanel Orientation="Horizontal">
-                            <Button Style="{StaticResource MaterialDesignToolForegroundButton}"
+                            <Button x:Name="btnReturn"
+                                    Style="{StaticResource MaterialDesignToolForegroundButton}"
                                     Command="{x:Static materialDesign:Flipper.FlipCommand}"
                                     HorizontalAlignment="Left">
                                 <materialDesign:PackIcon Kind="ArrowLeft"
                                                          HorizontalAlignment="Right"
                                                          Width="20"
                                                          Height="20"/>
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                                        <b:InvokeCommandAction Command="{Binding CancelCommand}"></b:InvokeCommandAction>
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
                             </Button>
                             <TextBlock Margin="8 0 0 0"
                                        VerticalAlignment="Center"
@@ -129,6 +140,7 @@
                                 <Setter Property="Opacity" Value="0.7" />
                                 <Setter Property="FontSize" Value="15"/>
                             </Style>
+                            
                         </Grid.Resources>
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -157,17 +169,30 @@
                         </TextBlock>
                         <Button Grid.Row="3"
                                 Grid.Column="0" 
+                                x:Name="btnCancel"
                                 Style="{StaticResource MaterialDesignFlatButton}"
-                                IsCancel="True"
                                 Margin="0,8,0,0"
                                 Content="取消"
                                 FontSize="15"
+                                Command="{Binding CancelCommand}"
+                                IsEnabled="False"
                                 HorizontalAlignment="Left">
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                                    <b:InvokeCommandAction Command="{x:Static materialDesign:Flipper.FlipCommand }"></b:InvokeCommandAction>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
                         </Button>
                         <TextBox Grid.Row="0"
                                  Grid.Column="1"
                                  x:Name="txtPluginName"
-                                 VerticalAlignment="Bottom">
+                                 VerticalAlignment="Bottom"
+                                 Text="{Binding Path=GamePlugin.Name,Mode=OneWay}">
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="TextChanged">
+                                    <b:InvokeCommandAction Command="{Binding CheckTextChangeCommand }"></b:InvokeCommandAction>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
                         </TextBox>
                         <Grid Grid.Row="1"
                               Grid.Column="1">
@@ -176,12 +201,20 @@
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <TextBox VerticalAlignment="Bottom"
-                                     x:Name="txtPluginPath">
+                                     x:Name="txtPluginPath"
+                                     Text="{Binding Path=GamePlugin.Path,Mode=OneWay}">
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="TextChanged">
+                                        <b:InvokeCommandAction Command="{Binding CheckTextChangeCommand }"></b:InvokeCommandAction>
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
                             </TextBox>
                             <Button Grid.Column="1"
                                     Style="{StaticResource MaterialDesignToolButton}"
                                     Padding="0"
-                                    VerticalAlignment="Bottom">
+                                    VerticalAlignment="Bottom"
+                                    Command="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel.EditGameLauncherPathCommand}"
+                                    CommandParameter="{Binding Source={x:Reference txtPluginPath}}">
                                 <materialDesign:PackIcon  
                                      Kind="FolderOutline"
                                      Width="25"
@@ -197,7 +230,13 @@
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <TextBox VerticalAlignment="Bottom"
-                                     x:Name="txtBackgroundPath">
+                                     x:Name="txtBackgroundPath"
+                                     Text="{Binding Path=GamePlugin.BackgroundPath}">
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="TextChanged">
+                                        <b:InvokeCommandAction Command="{Binding CheckTextChangeCommand }"></b:InvokeCommandAction>
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
                             </TextBox>
                             <Button Grid.Column="1"
                                     Style="{StaticResource MaterialDesignToolButton}"
@@ -211,21 +250,37 @@
                         </Grid>
                         <Button Grid.Row="3"
                                 Grid.Column="1" 
+                                x:Name="btnSave"
                                 Style="{StaticResource MaterialDesignFlatButton}"
                                 IsDefault="True"
                                 Margin="0,8,0,0"
                                 Content="保存"
                                 FontSize="15"
-                                HorizontalAlignment="Right">
-                            <Button.IsEnabled>
+                                HorizontalAlignment="Right"
+                                IsEnabled="False"
+                                Command="{Binding SaveCommand}">
+                            <!--<Button.IsEnabled>
                                 <MultiBinding Converter="{StaticResource BooleanAllConverter}">
                                     <Binding Source="{x:Reference txtPluginName}" Path="Text" Converter="{StaticResource InputContentToIsNull}"/>
                                     <Binding Source="{x:Reference txtPluginPath}" Path="Text" Converter="{StaticResource InputContentToIsNull}"/>
                                     <Binding Source="{x:Reference txtBackgroundPath}" Path="Text" Converter="{StaticResource InputContentToIsNull}"/>
                                 </MultiBinding>
-                            </Button.IsEnabled>
+                            </Button.IsEnabled>-->
                         </Button>
+                        
                     </Grid>
+
+                    <materialDesign:Snackbar Grid.Row="1"
+                                             x:Name="SnackbarTips"
+                                             Width="auto"
+                                             HorizontalAlignment="Center"
+                                             TextBlock.TextAlignment="Center"
+                                             MessageQueue="{materialDesign:MessageQueue}">
+                        <materialDesign:Snackbar.Clip>
+                            <RectangleGeometry RadiusX="10" RadiusY="10"  
+                                       Rect="0,0,288,50" />
+                        </materialDesign:Snackbar.Clip>
+                    </materialDesign:Snackbar>
                 </Grid>
             </materialDesign:Card>
         </materialDesign:Flipper.BackContent>

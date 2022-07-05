@@ -31,19 +31,24 @@ namespace GamePluginLauncher.Model
             get => _gamePlugins;
             set => UpdateValue(ref _gamePlugins, value);
         }
-        private int _selectIndex;
-        public int SelectIndex
+        private int _selectPluginId;
+        public int SelectPluginId
         {
-            get => _selectIndex;
-            set => UpdateValue(ref _selectIndex, value);
+            get => _selectPluginId;
+            set => UpdateValue(ref _selectPluginId, value);
         }
 
         public void AddPlugin(string name, string path)
         {
             if (GamePlugins == null)
                 GamePlugins = new ObservableCollection<GamePlugin>();
+
+            int count = GamePlugins.Count;
+            int id = count > 0 ? GamePlugins[count - 1].Id + 1 : 0;
+
             GamePlugins.Add(new GamePlugin
             {
+                Id = id,
                 Name = name,
                 Path = path,
                 BackgroundPath = ImageHelper.GetRandomBackground()

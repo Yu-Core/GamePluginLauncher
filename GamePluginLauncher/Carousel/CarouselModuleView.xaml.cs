@@ -1,9 +1,11 @@
 ﻿using GamePluginLauncher.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -84,7 +86,7 @@ namespace GamePluginLauncher.Carousel
             {
                 DataContext = new GameLauncher()
                 {
-                    SelectIndex = 0,
+                    SelectPluginId = 0,
                     Name = "启动器",
                     Id = 0,
                     GamePlugins = new ObservableCollection<GamePlugin>()
@@ -102,9 +104,10 @@ namespace GamePluginLauncher.Carousel
             for (int i = 0; i < plugins.Count; i++)
             {
                 string BackgroundPath = plugins[i].BackgroundPath;
-                string Name = plugins[i].Name;
-                AnimImage oItem = new AnimImage(Name,BackgroundPath);
-                oItem.Index = i;
+                AnimImage oItem = new AnimImage(BackgroundPath);
+                oItem.LauncherId = gameLauncher.Id;
+                oItem.PluginId = plugins[i].Id;
+                oItem.GamePlugin = plugins[i];
                 oItem.MouseLeftButtonDown += OItem_MouseLeftButtonDown;
                 oItem.MouseLeftButtonUp += OItem_MouseLeftButtonUp;
                 oItem.Width = this.ElementWidth;
@@ -130,14 +133,21 @@ namespace GamePluginLauncher.Carousel
                 if (this.InertiaDegree != 0)
                     CompositionTarget.Rendering += new EventHandler(CompositionTarget_Rendering);
                 e.Handled = true;
-                gameLauncher.SelectIndex = ((AnimImage)sender).Index;
+                gameLauncher.SelectPluginId = ((AnimImage)sender).PluginId;
             }
         }
 
         private void RotateToSelectItem()
         {
-            int selectindex = gameLauncher.SelectIndex;
-            this.InertiaDegree = CenterDegree - ElementList[selectindex].Degree;
+            int index = 0;
+            var count = plugins.Where(it => it.Id == gameLauncher.SelectPluginId).Count();
+
+            if(count > 0) 
+                index = plugins.IndexOf(plugins.Where(it => it.Id == gameLauncher.SelectPluginId).First());
+            else 
+                index = 0; 
+
+            this.InertiaDegree = CenterDegree - ElementList[index].Degree;
             if (this.InertiaDegree != 0)
                 CompositionTarget.Rendering += new EventHandler(CompositionTarget_Rendering);
         }

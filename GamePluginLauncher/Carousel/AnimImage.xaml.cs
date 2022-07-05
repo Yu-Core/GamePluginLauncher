@@ -1,4 +1,7 @@
-﻿using System;
+﻿using GamePluginLauncher.Model;
+using SimpleMvvm;
+using SimpleMvvm.Command;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -23,7 +26,33 @@ namespace GamePluginLauncher.Carousel
     /// </summary>
     public partial class AnimImage : UserControl
     {
-        public int Index { get; set; }
+        public int LauncherId { get; set; }
+        public int PluginId { get; set; }
+
+        private GamePlugin _gamePlugin;
+        public GamePlugin GamePlugin
+        {
+            get => _gamePlugin;
+            set
+            {
+                _gamePlugin = value;
+            }
+        }
+        //public string PluginName { 
+        //    get => PluginName;
+        //    set
+        //    {
+        //        PluginName = value;
+        //        ConnectStrChanged?.Invoke(null, EventArgs.Empty);
+        //    }
+        //}
+        //public string PluginPath { get; set; }
+        //public string PluginBackgroundPath { get; set; }
+        //public GamePlugin gamePlugin
+        //{
+        //    get => StaticData.GameLaunchers[LauncherId].GamePlugins[PluginId];
+        //    set => StaticData.GameLaunchers[LauncherId].GamePlugins[PluginId] = value;
+        //}
 
         public bool Is180
         {
@@ -98,14 +127,16 @@ namespace GamePluginLauncher.Carousel
             }
         }
 
-        public AnimImage(string Name, string BackgroundPath)
+        public AnimImage(string BackgroundPath)
         {
             InitializeComponent();
             this.FileSrc = BackgroundPath;
-            this.TbkTitle.Text = Name;
             this.Loaded += ImageItem_Loaded;
             this.DataContext = this;
 
+            SaveCommand = new DelegateCommand(Save);
+            CancelCommand = new DelegateCommand(Cancel);
+            CheckTextChangeCommand = new DelegateCommand(CheckTextChange);
         }
 
         private void ImageItem_Loaded(object sender, RoutedEventArgs e)
@@ -114,5 +145,47 @@ namespace GamePluginLauncher.Carousel
             AsynchUtils.AsynchSleepExecuteFunc(this.Dispatcher, LoadUiImmediate, 0.5);
         }
 
+        private void Save()
+        {
+            GamePlugin.Name = txtPluginName.Text;
+            GamePlugin.Path = txtPluginPath.Text;
+            GamePlugin.BackgroundPath = txtBackgroundPath.Text;
+
+            if (SnackbarTips.MessageQueue is { } messageQueue)
+            {
+                //use the message queue to send a message.
+                string message = "保存成功";
+                //the message queue can be called from any thread
+                Task.Factory.StartNew(() => messageQueue.Enqueue(message));
+            }
+        }
+        private void Cancel()
+        {
+            txtPluginName.Text = GamePlugin.Name;
+            txtPluginPath.Text = GamePlugin.Path;
+            txtBackgroundPath.Text = GamePlugin.BackgroundPath;
+
+        }
+        private void CheckTextChange()
+        {
+            bool nameIsChange = txtPluginName.Text == GamePlugin.Name;
+            bool pathIsChange = txtPluginPath.Text == GamePlugin.Path;
+            bool backgroundIsChange = txtBackgroundPath.Text == GamePlugin.BackgroundPath;
+            if(nameIsChange && pathIsChange && backgroundIsChange)
+            {
+                btnCancel.IsEnabled = false;
+                btnSave.IsEnabled = false;
+            }
+            else
+            {
+                btnCancel.IsEnabled = true;
+                btnSave.IsEnabled = true;
+            }
+        }
+
+        public DelegateCommand CancelCommand { get; set; }
+        public DelegateCommand SaveCommand { get; set; }
+        public DelegateCommand CheckTextChangeCommand { get; set; }
+        public 
     }
 }
