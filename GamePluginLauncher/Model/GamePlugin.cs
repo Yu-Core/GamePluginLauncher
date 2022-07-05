@@ -9,6 +9,12 @@ namespace GamePluginLauncher.Model
 {
     public class GamePlugin : NotificationObject
     {
+        private int _id;
+        public int Id
+        {
+            get => _id;
+            set => UpdateValue(ref _id, value);
+        }
         private string? _name;
         public string? Name
         {
