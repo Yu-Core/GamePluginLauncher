@@ -1,4 +1,6 @@
 ﻿using GamePluginLauncher.Model;
+using GamePluginLauncher.Utils;
+using Microsoft.Win32;
 using SimpleMvvm;
 using SimpleMvvm.Command;
 using System;
@@ -137,6 +139,7 @@ namespace GamePluginLauncher.Carousel
             SaveCommand = new DelegateCommand(Save);
             CancelCommand = new DelegateCommand(Cancel);
             CheckTextChangeCommand = new DelegateCommand(CheckTextChange);
+            EditBackgroundPathCommand = new DelegateCommand(EditBackgroundPath);
         }
 
         private void ImageItem_Loaded(object sender, RoutedEventArgs e)
@@ -183,9 +186,28 @@ namespace GamePluginLauncher.Carousel
             }
         }
 
+        private void EditBackgroundPath(object obj)
+        {
+            try
+            {
+                var ofd = new OpenFileDialog
+                {
+                    Filter = "图片文件 (*.jpg;*.JPG;*.jpeg;*.JPEG;*.png;*.PNG;*.gif;*.GIF)|*.jpg;*.JPG;*.jpeg;*.JPEG;*.png;*.PNG;*.gif;*.GIF"
+                };
+                if (ofd.ShowDialog() == true)
+                {
+                    ((TextBox)obj).Text = ofd.FileName;
+                }
+            }
+            catch (Exception ex)
+            {
+                MsgBoxHelper.ShowError(ex.Message);
+            }
+        }
+
         public DelegateCommand CancelCommand { get; set; }
         public DelegateCommand SaveCommand { get; set; }
         public DelegateCommand CheckTextChangeCommand { get; set; }
-        public 
+        public DelegateCommand EditBackgroundPathCommand { get; set; }
     }
 }
