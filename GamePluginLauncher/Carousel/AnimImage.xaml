@@ -28,6 +28,7 @@
         <converters:InvertBooleanAllConverter x:Key="InvertBooleanAllConverter"></converters:InvertBooleanAllConverter>
         <converters:InputContentToIsNull x:Key="InputContentToIsNull"></converters:InputContentToIsNull>
         <converters:TextToIsChange x:Key="TextToIsChange"></converters:TextToIsChange>
+        <converters:IDToIsCanDelete x:Key="IDToIsCanDelete"></converters:IDToIsCanDelete>
     </UserControl.Resources>
     <materialDesign:Flipper x:Name="FlipperContainer"
                             Style="{StaticResource MaterialDesignCardFlipper}"
@@ -83,12 +84,15 @@
                                          Foreground="White"/>
                     </Button>
                     <Button x:Name="DeletePlugin"
-                    Style="{wms:MultiStyle BtnVisibility MaterialDesignIconButton}"
-                    ToolTip="删除插件" Cursor="Hand"
-                    Margin="0,0,0,0"
-                    Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top">
+                            Style="{wms:MultiStyle BtnVisibility MaterialDesignIconButton}"
+                            ToolTip="删除插件" Cursor="Hand"
+                            Margin="0,0,0,0"
+                            Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            IsEnabled="{Binding PluginId, Converter={StaticResource IDToIsCanDelete}}"
+                            Command="{Binding Source={StaticResource Locator}, Path=PluginSelectorViewModel.RemoveGamePluginCommand}"
+                            CommandParameter="{x:Reference UserControl}">
                         <materialDesign:PackIcon Kind="CloseThick"
                                          Height="25"
                                          Width="25"
@@ -231,7 +235,7 @@
                             </Grid.ColumnDefinitions>
                             <TextBox VerticalAlignment="Bottom"
                                      x:Name="txtBackgroundPath"
-                                     Text="{Binding Path=GamePlugin.BackgroundPath}">
+                                     Text="{Binding Path=GamePlugin.BackgroundPath, Mode=OneWay}">
                                 <b:Interaction.Triggers>
                                     <b:EventTrigger EventName="TextChanged">
                                         <b:InvokeCommandAction Command="{Binding CheckTextChangeCommand }"></b:InvokeCommandAction>
@@ -258,8 +262,8 @@
                                 Margin="0,8,0,0"
                                 Content="保存"
                                 FontSize="15"
-                                HorizontalAlignment="Right"
                                 IsEnabled="False"
+                                HorizontalAlignment="Right"
                                 Command="{Binding SaveCommand}">
                             <!--<Button.IsEnabled>
                                 <MultiBinding Converter="{StaticResource BooleanAllConverter}">

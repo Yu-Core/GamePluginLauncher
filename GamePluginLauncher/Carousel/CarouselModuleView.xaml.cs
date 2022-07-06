@@ -1,4 +1,5 @@
 ﻿using GamePluginLauncher.Model;
+using GamePluginLauncher.Utils;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -140,12 +141,8 @@ namespace GamePluginLauncher.Carousel
         private void RotateToSelectItem()
         {
             int index = 0;
-            var count = plugins.Where(it => it.Id == gameLauncher.SelectPluginId).Count();
-
-            if(count > 0) 
-                index = plugins.IndexOf(plugins.Where(it => it.Id == gameLauncher.SelectPluginId).First());
-            else 
-                index = 0; 
+            var plugin = plugins.Where(it => it.Id == gameLauncher.SelectPluginId).FirstOrDefault();
+            if (plugin != null) index = plugins.IndexOf(plugin);
 
             this.InertiaDegree = CenterDegree - ElementList[index].Degree;
             if (this.InertiaDegree != 0)
@@ -296,5 +293,21 @@ namespace GamePluginLauncher.Carousel
         }
 
         #endregion
+
+        public void RemoveElement(int pluginId)
+        {
+            var plugin = this.ElementList.Where(it=>it.PluginId == pluginId).FirstOrDefault();
+            if(plugin != null)
+            {
+                this.ElementList.Remove(plugin);
+                this.CvMain.Children.Remove(plugin);
+                plugin.IsVisible = false;
+                RotateToSelectItem();
+            }
+            else
+            {
+                MsgBoxHelper.ShowError("删除失败");
+            }
+        }
     }
 }
