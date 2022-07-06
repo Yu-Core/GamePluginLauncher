@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -101,6 +102,20 @@ namespace GamePluginLauncher.ViewModel
             var result = await DialogHost.Show(dialog);
             if (Convert.ToBoolean(result))
             {
+                if (string.IsNullOrWhiteSpace(dialog.LauncherName.Text))
+                {
+                    //MsgBoxHelper.ShowError("名称不能为空。");
+                    var dialog2 = new ErrorMessageDialog() { DataContext = "名称不能为空" };
+                    await DialogHost.Show(dialog2);
+                    return;
+                }
+                if (!File.Exists(dialog.LauncherPath.Text) || PathHelper.GetSuffix(dialog.LauncherPath.Text).ToUpper() != "EXE")
+                {
+                    //MsgBoxHelper.ShowError("文件不存在或不支持。");
+                    var dialog3 = new ErrorMessageDialog() { DataContext = "文件不存在或不支持" };
+                    await DialogHost.Show(dialog3);
+                    return;
+                }
                 gameLauncher.Name = dialog.LauncherName.Text;
                 gameLauncher.GamePlugins[0].Path = dialog.LauncherPath.Text;
             }

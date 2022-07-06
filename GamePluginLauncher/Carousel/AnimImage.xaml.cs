@@ -1,5 +1,7 @@
 ﻿using GamePluginLauncher.Model;
 using GamePluginLauncher.Utils;
+using GamePluginLauncher.View.Dialogs;
+using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
 using SimpleMvvm;
 using SimpleMvvm.Command;
@@ -150,17 +152,52 @@ namespace GamePluginLauncher.Carousel
 
         private void Save()
         {
-            GamePlugin.Name = txtPluginName.Text;
-            GamePlugin.Path = txtPluginPath.Text;
-            GamePlugin.BackgroundPath = txtBackgroundPath.Text;
+            string name = txtPluginName.Text;
+            string path = txtPluginPath.Text;
+            string backgroundpath = txtBackgroundPath.Text;
 
-            if (SnackbarTips.MessageQueue is { } messageQueue)
+            GamePlugin.Name = name;
+            if (File.Exists(path))
             {
-                //use the message queue to send a message.
-                string message = "保存成功";
-                //the message queue can be called from any thread
-                Task.Factory.StartNew(() => messageQueue.Enqueue(message));
+                GamePlugin.Path = path;
             }
+            else
+            {
+                txtPluginPath.Text = GamePlugin.Path;
+                if (SnackbarTips.MessageQueue is { } messageQueue)
+                {
+                    string message = "插件路径不正确或不存在";
+                    Task.Factory.StartNew(() => messageQueue.Enqueue(message));
+                }
+            }
+            if (File.Exists(backgroundpath))
+            {
+                if (GamePlugin.BackgroundPath != backgroundpath)
+                {
+                    ImgMain.Source = new BitmapImage(new Uri(backgroundpath));
+                }
+                GamePlugin.BackgroundPath = backgroundpath;
+            }
+            else
+            {
+                txtBackgroundPath.Text = GamePlugin.BackgroundPath;
+                if (SnackbarTips.MessageQueue is { } messageQueue)
+                {
+                    string message = "图片路径不正确或不存在";
+                    Task.Factory.StartNew(() => messageQueue.Enqueue(message));
+                }
+                 
+            }
+            if (File.Exists(backgroundpath) && File.Exists(path))
+            {
+                if (SnackbarTips.MessageQueue is { } messageQueue)
+                {
+                    string message = "保存成功";
+                    Task.Factory.StartNew(() => messageQueue.Enqueue(message));
+                }
+            }
+            btnSave.IsEnabled = false;
+            btnCancel.IsEnabled = false;
         }
         private void Cancel()
         {
@@ -181,8 +218,17 @@ namespace GamePluginLauncher.Carousel
             }
             else
             {
+                if (string.IsNullOrWhiteSpace(txtPluginName.Text) || string.IsNullOrWhiteSpace(txtPluginPath.Text) ||
+                    string.IsNullOrWhiteSpace(txtBackgroundPath.Text)) 
+                {
+                    btnSave.IsEnabled = false;
+                }
+                else
+                {
+                    btnSave.IsEnabled = true;
+                }
                 btnCancel.IsEnabled = true;
-                btnSave.IsEnabled = true;
+                
             }
         }
 
@@ -204,10 +250,12 @@ namespace GamePluginLauncher.Carousel
                 MsgBoxHelper.ShowError(ex.Message);
             }
         }
+        
 
         public DelegateCommand CancelCommand { get; set; }
         public DelegateCommand SaveCommand { get; set; }
         public DelegateCommand CheckTextChangeCommand { get; set; }
         public DelegateCommand EditBackgroundPathCommand { get; set; }
+        public DelegateCommand RemoveGamePluginCommand { get; set; }
     }
 }
