@@ -18,27 +18,31 @@ namespace GamePluginLauncher.ViewModel
 {
     public class PluginSelectorViewModel:ViewModelBase
     {
-        private int _launcherID;
-        public int LauncherID
+        private GameLauncher _gameLauncher;
+        public GameLauncher GameLauncher
         {
-            get => _launcherID;
-            set => UpdateValue(ref _launcherID,value);
+            get => _gameLauncher;
+            set => UpdateValue(ref _gameLauncher,value); 
         }
 
         public DelegateCommand? OpenGamePluginCommand { get; set; }
         public DelegateCommand? RemoveGamePluginCommand { get; set; }
 
-        private void OpenGamePlugin(GamePlugin gamePlugin)
+        private void OpenGamePlugin(int id)
         {
-            var path = PathHelper.FormatPath(gamePlugin.Path);
+            var plugin = GameLauncher.GamePlugins.FirstOrDefault(x => x.Id == id);
+            if(plugin == null)
+            {
+                MsgBoxHelper.ShowError("该插件不存在");
+            }
+            var path = PathHelper.FormatPath(plugin.Path);
             var info = Executer.ShellExecute(IntPtr.Zero, "open", path, string.Empty,
                 PathHelper.GetLocatedFolderPath(path), Executer.ShowCommands.SW_SHOWNORMAL);
 
-            //if ((int)info < 32)
-            //{
-            //    if (ShowOpenErrorMsg)
-            //        MsgBoxHelper.ShowError($"启动时发生错误：{Executer.GetErrorStr(info)}");
-            //}
+            if ((int)info < 32)
+            {
+                MsgBoxHelper.ShowError($"启动时发生错误：{Executer.GetErrorStr(info)}");
+            }
         }
 
 
@@ -46,6 +50,7 @@ namespace GamePluginLauncher.ViewModel
         {
             base.Init();
             RemoveGamePluginCommand = new DelegateCommand<AnimImage>(RemoveGamePlugin);
+            OpenGamePluginCommand = new DelegateCommand<int>(OpenGamePlugin);
         }
 
         private async void RemoveGamePlugin(AnimImage animImage)
@@ -59,7 +64,7 @@ namespace GamePluginLauncher.ViewModel
             {
                 try
                 {
-                    var plugins = StaticData.GameLaunchers.Where(it => it.Id == LauncherID).First().GamePlugins;
+                    var plugins = StaticData.GameLaunchers.Where(it => it.Id == GameLauncher.Id).First().GamePlugins;
                     var plugin = plugins.Where(it=>it.Id == animImage.PluginId).FirstOrDefault();
                     if (plugin != null)
                     {
