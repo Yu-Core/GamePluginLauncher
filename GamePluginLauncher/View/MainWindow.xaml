@@ -15,136 +15,183 @@
         TextElement.FontSize="14"
         FontFamily="Microsoft YaHei UI"
         Title="游戏插件启动器" 
-        Height="450" 
-        Width="800" 
+        Height="500" 
+        Width="950" 
+        x:Name="MainWindowOnly"
         WindowStartupLocation="CenterScreen"
-        DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}"
-        Topmost="{Binding WindowTopmost}"
-        WindowState="{Binding WindowState}">
+        WindowStyle="None"
+        AllowsTransparency="True"
+        DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}">
     <materialDesign:DialogHost DialogTheme="Inherit">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50"></RowDefinition>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
+        <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+            <materialDesign:DrawerHost.LeftDrawerContent>
+                <StackPanel Margin="16" Orientation="Vertical">
+                    <ToggleButton 
+                        Style="{StaticResource MaterialDesignHamburgerToggleButton}" 
+                        HorizontalAlignment="Right" 
+                        Margin="0,0,0,16"
+                        IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}"/>
 
-            <!--<Button Style="{StaticResource MaterialDesignIconButton}"
-                ToolTip="MaterialDesignIconButton" Cursor="Hand"
-                HorizontalAlignment="Right"
-                Margin="0,0,10,0" >
-                <materialDesign:PackIcon Kind="Rotate3dVariant" Width="30" Height="30"/>
-            </Button>-->
-            <Border Grid.Row="1"
-                Padding="15" HorizontalAlignment="Center">
-                <!--<WrapPanel>-->
-                <ScrollViewer VerticalScrollBarVisibility="Hidden">
-                    <ItemsControl>
-                        <ItemsControl.ItemsSource>
-                            <CompositeCollection>
-                                <CollectionContainer Collection="{Binding Source={x:Static model:StaticData.GameLaunchers}}"></CollectionContainer>
-                                <Button Width="200"
-                                        Height="120"
-                                        Margin="15,15,15,15"
-                                        Padding="0"
-                                        Cursor="Hand"
-                                        Background= "{DynamicResource PrimaryHueLightBrush}"
-                                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                                        materialDesign:ButtonAssist.CornerRadius="10"
-                                        BorderThickness="0"
-                                        materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                                        Command="{Binding NewGameLauncherCommand}">
-                                    <materialDesign:PackIcon Kind="Plus" Width="50" Height="50" />
-                                </Button>
-                            </CompositeCollection>
-                        </ItemsControl.ItemsSource>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel >
-                                </WrapPanel>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type model:GameLauncher}">
-                                <Button Width="200"
-                                        Height="120"
-                                        Margin="15,15,15,15"
-                                        Padding="0"
-                                        Cursor="Hand"
-                                        Background= "{DynamicResource PrimaryHueLightBrush}"
-                                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                                        materialDesign:ButtonAssist.CornerRadius="10"
-                                        BorderThickness="0"
-                                        materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                                        Command="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel.OpenGameLauncherCommand}"
-                                        CommandParameter="{Binding Path=Id}">
-                                    <Grid Width="200"
-                                          Height="120">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="25"></RowDefinition>
-                                            <RowDefinition></RowDefinition>
-                                        </Grid.RowDefinitions>
+                    <Button Command="{Binding ViewSourceCommand}"
+                            Margin="4"
+                            HorizontalAlignment="Center"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Content="查看源代码" />
+                    <Button Command="{Binding ThanksCommand}"
+                            Margin="4"
+                            HorizontalAlignment="Center"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Content="鸣谢" />
+                    <Button Command="{Binding ShowAboutCommand}"
+                            Margin="4"
+                            HorizontalAlignment="Center"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Content="关于" />
+                </StackPanel>
+            </materialDesign:DrawerHost.LeftDrawerContent>
 
-                                        <materialDesign:PopupBox x:Name="LauncherOptions"
-                                                     HorizontalAlignment="Right"
-                                                     Style="{StaticResource  MaterialDesignToolPopupBox}"
-                                                     PopupUniformCornerRadius="10"
-                                                     Width="25"
-                                                     Height="25"
-                                                     Margin="0,0,8,-16"
-                                                     Padding="2 0 2 0"
-                                                     ButtonBase.Click="LauncherOptions_Click">
-                                            <StackPanel>
-                                                <Button Content="添加插件"
-                                                        Command="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel.AddGamePluginCommand}"
-                                                        CommandParameter="{Binding}">
-                                                </Button>
-                                                <Button Content="编辑"
-                                                        Command="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel.EditGameLauncherCommand}"
-                                                        CommandParameter="{Binding}">
-                                                </Button>
-                                                <Button Content="重命名"
-                                                        Command="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel.RenameGameLauncherCommand}"
-                                                        CommandParameter="{Binding}">
-                                                </Button>
-                                                <Button Content="创建快捷方式"></Button>
-                                                <Button Content="打开游戏启动路径"
-                                                        Command="{Binding Source={StaticResource Locator},Path=MainWindowViewModel.ShowInExplorerCommand}"
-                                                        CommandParameter="{Binding}"/>
-                                                <Button Content="删除"
-                                                        Command="{Binding Source={StaticResource Locator},Path=MainWindowViewModel.RemoveGameLauncherCommand}"
-                                                        CommandParameter="{Binding}">
-                                                </Button>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <materialDesign:ColorZone Mode="PrimaryLight"
+                                          Padding="16"
+                                          Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                          materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                                          ClipToBounds="False">
+                    <Grid >
+                        <ToggleButton x:Name="MenuToggleButton"
+                                      Style="{StaticResource MaterialDesignHamburgerToggleButton}"
+                                      IsChecked="False"
+                                      HorizontalAlignment="Left"/>
+                        <TextBlock VerticalAlignment="Center"
+                                       Margin="16 0 0 0"
+                                       Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                                       HorizontalAlignment="Center"
+                                       Text="Game Plugin Launcher" />
+                        <Button Style="{StaticResource MaterialDesignToolButton}"
+                                Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                HorizontalAlignment="Right"
+                                Command="{Binding CloseWindowCommand}"
+                                CommandParameter="{Binding ElementName=MainWindowOnly}">
+                            <materialDesign:PackIcon Kind="WindowClose"
+                                                     Width="30"
+                                                     Height="30"/>
+                        </Button>
+                    </Grid>
+                </materialDesign:ColorZone>
+                <Border Grid.Row="1"
+                    Padding="15" HorizontalAlignment="Center">
+                    <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                        <ItemsControl>
+                            <ItemsControl.ItemsSource>
+                                <CompositeCollection>
+                                    <CollectionContainer Collection="{Binding Source={x:Static model:StaticData.GameLaunchers}}"></CollectionContainer>
+                                    <Button Width="200"
+                                            Height="120"
+                                            Margin="15,15,15,15"
+                                            Padding="0"
+                                            Cursor="Hand"
+                                            Background= "{DynamicResource PrimaryHueLightBrush}"
+                                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                            materialDesign:ButtonAssist.CornerRadius="10"
+                                            BorderThickness="0"
+                                            materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                            Command="{Binding NewGameLauncherCommand}">
+                                        <materialDesign:PackIcon Kind="Plus" Width="50" Height="50" />
+                                    </Button>
+                                </CompositeCollection>
+                            </ItemsControl.ItemsSource>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel >
+                                    </WrapPanel>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="{x:Type model:GameLauncher}">
+                                    <Button Width="200"
+                                            Height="120"
+                                            Margin="15,15,15,15"
+                                            Padding="0"
+                                            Cursor="Hand"
+                                            Background= "{DynamicResource PrimaryHueLightBrush}"
+                                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                            materialDesign:ButtonAssist.CornerRadius="10"
+                                            BorderThickness="0"
+                                            materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                            Command="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel.OpenGameLauncherCommand}"
+                                            CommandParameter="{Binding}">
+                                        <Grid Width="200"
+                                              Height="120">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="25"></RowDefinition>
+                                                <RowDefinition></RowDefinition>
+                                            </Grid.RowDefinitions>
+
+                                            <materialDesign:PopupBox x:Name="LauncherOptions"
+                                                         HorizontalAlignment="Right"
+                                                         Style="{StaticResource  MaterialDesignToolPopupBox}"
+                                                         PopupUniformCornerRadius="10"
+                                                         Width="25"
+                                                         Height="25"
+                                                         Margin="0,0,8,-16"
+                                                         Padding="2 0 2 0"
+                                                         ButtonBase.Click="LauncherOptions_Click">
+                                                <StackPanel>
+                                                    <Button Content="添加插件"
+                                                            Command="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel.AddGamePluginCommand}"
+                                                            CommandParameter="{Binding}">
+                                                    </Button>
+                                                    <Button Content="编辑"
+                                                            Command="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel.EditGameLauncherCommand}"
+                                                            CommandParameter="{Binding}">
+                                                    </Button>
+                                                    <Button Content="重命名"
+                                                            Command="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel.RenameGameLauncherCommand}"
+                                                            CommandParameter="{Binding}">
+                                                    </Button>
+                                                    <Button Content="创建快捷方式"></Button>
+                                                    <Button Content="打开游戏启动路径"
+                                                            Command="{Binding Source={StaticResource Locator},Path=MainWindowViewModel.ShowInExplorerCommand}"
+                                                            CommandParameter="{Binding}"/>
+                                                    <Button Content="删除"
+                                                            Command="{Binding Source={StaticResource Locator},Path=MainWindowViewModel.RemoveGameLauncherCommand}"
+                                                            CommandParameter="{Binding}">
+                                                    </Button>
+                                                </StackPanel>
+                                            </materialDesign:PopupBox>
+
+                                            <StackPanel Grid.Row="1" 
+                                                        Width="200"
+                                                        Orientation="Horizontal"
+                                                        VerticalAlignment="Top">
+                                                <Image  Height="70"
+                                                        Width="70"
+                                                        Stretch="UniformToFill"
+                                                        Margin="20,0,0,0"
+                                                        Source="{Binding GamePlugins[0].Path, Converter={StaticResource Path2Icon}}"/>
+                                                <TextBlock Grid.Column="1"
+                                                           Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                                           VerticalAlignment="Center"
+                                                           HorizontalAlignment="Center"
+                                                           Margin="10,0,0,0"
+                                                           Width="85"
+                                                           Height="35"
+                                                           TextWrapping="Wrap"
+                                                           Text="{Binding Name}">
+                                                </TextBlock>
                                             </StackPanel>
-                                        </materialDesign:PopupBox>
-
-                                        <StackPanel Grid.Row="1" 
-                                                    Width="200"
-                                                    Orientation="Horizontal"
-                                                    VerticalAlignment="Top">
-                                            <Image  Height="70"
-                                                    Width="70"
-                                                    Stretch="UniformToFill"
-                                                    Margin="20,0,0,0"
-                                                    Source="{Binding GamePlugins[0].Path, Converter={StaticResource Path2Icon}}"/>
-                                            <TextBlock Grid.Column="1"
-                                                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                                       VerticalAlignment="Center"
-                                                       HorizontalAlignment="Center"
-                                                       Margin="10,0,0,0"
-                                                       Width="85"
-                                                       Height="35"
-                                                       TextWrapping="Wrap"
-                                                       Text="{Binding Name}">
-                                            </TextBlock>
-                                        </StackPanel>
-                                    </Grid>
-                                </Button>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    <!--</WrapPanel>-->
-                </ScrollViewer>
-            </Border>
-        </Grid>
+                                        </Grid>
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+        </materialDesign:DrawerHost>
     </materialDesign:DialogHost>
 </Window>

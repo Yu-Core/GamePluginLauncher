@@ -24,34 +24,6 @@ namespace GamePluginLauncher.ViewModel
     public class MainWindowViewModel : ViewModelBase
     {
 
-        private WindowState _windowState;
-        public WindowState WindowState
-        {
-            get => _windowState;
-            set => UpdateValue(ref _windowState, value);
-        }
-
-        private bool _windowTopmost;
-        public bool WindowTopmost
-        {
-            get => _windowTopmost;
-            set => UpdateValue(ref _windowTopmost, value);
-        }
-
-        private bool _minimizeWindowAfterOpening;
-        public bool MinimizeWindowAfterOpening
-        {
-            get => _minimizeWindowAfterOpening;
-            set => UpdateValue(ref _minimizeWindowAfterOpening, value);
-        }
-
-        private bool _showOpenErrorMsg;
-        public bool ShowOpenErrorMsg
-        {
-            get => _showOpenErrorMsg;
-            set => UpdateValue(ref _showOpenErrorMsg, value);
-        }
-
         public DelegateCommand? NewGameLauncherCommand { get; set; }
         public DelegateCommand? RemoveGameLauncherCommand { get; set; }
         public DelegateCommand? EditGameLauncherCommand { get; set; }
@@ -60,6 +32,10 @@ namespace GamePluginLauncher.ViewModel
         public DelegateCommand? AddGamePluginCommand { get; set; }
         public DelegateCommand? OpenGameLauncherCommand { get; set; }
         public DelegateCommand? EditGameLauncherPathCommand { get; set; }
+        public DelegateCommand? ViewSourceCommand { get; set; }
+        public DelegateCommand? ShowAboutCommand { get; set; }
+        public DelegateCommand? ThanksCommand { get; set; }
+        public DelegateCommand? CloseWindowCommand { get; set; }
 
         private void NewGameLauncher(object obj)
         {
@@ -105,14 +81,14 @@ namespace GamePluginLauncher.ViewModel
                 if (string.IsNullOrWhiteSpace(dialog.LauncherName.Text))
                 {
                     //MsgBoxHelper.ShowError("名称不能为空。");
-                    var dialog2 = new ErrorMessageDialog() { DataContext = "名称不能为空" };
+                    var dialog2 = new MessageDialog("名称不能为空");
                     await DialogHost.Show(dialog2);
                     return;
                 }
                 if (!File.Exists(dialog.LauncherPath.Text) || PathHelper.GetSuffix(dialog.LauncherPath.Text).ToUpper() != "EXE")
                 {
                     //MsgBoxHelper.ShowError("文件不存在或不支持。");
-                    var dialog3 = new ErrorMessageDialog() { DataContext = "文件不存在或不支持" };
+                    var dialog3 = new MessageDialog("文件不存在或不支持");
                     await DialogHost.Show(dialog3);
                     return;
                 }
@@ -157,19 +133,13 @@ namespace GamePluginLauncher.ViewModel
                 MsgBoxHelper.ShowError(e.Message);
             }
         }
-        private void OpenGameLauncher(object id)
+        private void OpenGameLauncher(object gameLauncher)
         {
             var pluginSelector = new PluginSelector()
             {
-                LauncherID = (int)id
+                GameLauncher = (GameLauncher)gameLauncher
             };
             pluginSelector.ShowDialog();
-            //测试使用
-            //var dialog = new ErrorMessageDialog()
-            //{
-            //    DataContext = $"进入了第{index}个启动器"
-            //};
-            //await DialogHost.Show(dialog);
         }
         private void EditGameLauncherPath(object obj)
         {
@@ -189,15 +159,34 @@ namespace GamePluginLauncher.ViewModel
                 MsgBoxHelper.ShowError(ex.Message);
             }
         }
+        private void ViewSource(object obj)
+        {
+            ProcessStartInfo info = new ProcessStartInfo("https://github.com/Yu-Core/GamePluginLauncher")
+            {
+                UseShellExecute = true
+            };
+            Process.Start(info)?.Dispose();
+        }
+
+        private async void ShowAbout(object obj)
+        {
+            var assemblyName = System.Reflection.Assembly.GetEntryAssembly()?.GetName();
+            var dialog = new MessageDialog($"{assemblyName.Name} v{assemblyName.Version} \nBy Yu-Core","关于");
+            await DialogHost.Show(dialog);
+        }
+        private async void Thanks(object obj)
+        {
+            var assemblyName = System.Reflection.Assembly.GetEntryAssembly()?.GetName();
+            var dialog = new MessageDialog("感谢以下项目的帮助\n\nhttps://github.com/Mzying2001/AppLauncher_WPF\n\nhttps://github.com/DuelWithSelf/WPFEffects", "鸣谢");
+            await DialogHost.Show(dialog);
+        }
+        private void CloseWindow(object obj)
+        {
+            ((Window)obj).Close();
+        }
         protected override void Init()
         {
             base.Init();
-
-            var config = StaticData.Config;
-            //AppListListBoxSelectedIndex = config.AppListListBoxSelectedIndex;
-            WindowTopmost = config.MainWindowTopmost;
-            MinimizeWindowAfterOpening = config.MinimizeMainWindowAfterOpening;
-            ShowOpenErrorMsg = config.ShowOpenErrorMessage;
 
             NewGameLauncherCommand = new DelegateCommand(NewGameLauncher);
             RemoveGameLauncherCommand = new DelegateCommand<GameLauncher>(RemoveGameLauncher);
@@ -207,6 +196,10 @@ namespace GamePluginLauncher.ViewModel
             AddGamePluginCommand = new DelegateCommand<GameLauncher>(AddGamePlugin);
             OpenGameLauncherCommand = new DelegateCommand(OpenGameLauncher);
             EditGameLauncherPathCommand = new DelegateCommand(EditGameLauncherPath);
+            ViewSourceCommand = new DelegateCommand(ViewSource);
+            ShowAboutCommand = new DelegateCommand(ShowAbout);
+            ThanksCommand = new DelegateCommand(Thanks);
+            CloseWindowCommand = new DelegateCommand(CloseWindow);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using GamePluginLauncher.Carousel;
+using GamePluginLauncher.Model;
 using GamePluginLauncher.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -22,9 +23,9 @@ namespace GamePluginLauncher.View
     public partial class PluginSelector : Window
     {
         PluginSelectorViewModel pluginSelectorViewModel => (PluginSelectorViewModel)DataContext;
-        public int LauncherID
+        public GameLauncher GameLauncher
         { 
-            set=> pluginSelectorViewModel.LauncherID = value;
+            set=> pluginSelectorViewModel.GameLauncher = value;
         }
         public PluginSelector()
         {

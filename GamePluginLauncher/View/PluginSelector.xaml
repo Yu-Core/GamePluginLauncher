@@ -5,12 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GamePluginLauncher"
         mc:Ignorable="d"
-        xmlns:model="clr-namespace:GamePluginLauncher.Model" 
-        xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:carousel="clr-namespace:GamePluginLauncher.Carousel" 
-        xmlns:viewmodel="clr-namespace:GamePluginLauncher.ViewModel" 
-        xmlns:converters="clr-namespace:GamePluginLauncher.Utils.Converters"
+        xmlns:carousel="clr-namespace:GamePluginLauncher.Carousel"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
@@ -18,13 +14,7 @@
         FontFamily="YouYuan"
         Title="选择插件" Height="450" Width="800" WindowStartupLocation="CenterScreen"
         DataContext="{Binding Source={StaticResource Locator}, Path=PluginSelectorViewModel}">
-    <!--<Window.DataContext>
-        <viewmodel:PluginSelectorViewModel></viewmodel:PluginSelectorViewModel>
-    </Window.DataContext>-->
-    <Window.Resources>
-        <converters:IDToGameLauncher x:Key="IDToGameLauncher"></converters:IDToGameLauncher>
-    </Window.Resources>
-    <materialDesign:DialogHost Identifier="PluginDialog" DialogTheme="Inherit">
+   <materialDesign:DialogHost Identifier="PluginDialog" DialogTheme="Inherit">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
@@ -32,18 +22,19 @@
             </Grid.RowDefinitions>
             <Border Padding="15,15,15,0">
                 <Grid x:Name="GdContent" Background="Transparent">
-                    <carousel:CarouselModuleView DataContext="{Binding Path=LauncherID, Converter={StaticResource IDToGameLauncher}}"  >
+                    <carousel:CarouselModuleView DataContext="{Binding Path=GameLauncher}"  >
                     </carousel:CarouselModuleView>
                 </Grid>
             </Border>
             <Button Grid.Row="1"
-                Style="{StaticResource MaterialDesignRaisedDarkButton}"
-                Width="200"
-                Height="50"
-                materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                materialDesign:ButtonAssist.CornerRadius="20"
-                Content="启动">
-
+                    Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                    Width="200"
+                    Height="50"
+                    materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                    materialDesign:ButtonAssist.CornerRadius="20"
+                    Content="启动"
+                    Command="{Binding OpenGamePluginCommand}"
+                    CommandParameter="{Binding GameLauncher.SelectPluginId}">
             </Button>
         </Grid>
     </materialDesign:DialogHost>

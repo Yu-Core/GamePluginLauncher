@@ -18,11 +18,22 @@ namespace GamePluginLauncher.View.Dialogs
     /// <summary>
     /// ErrorMessage.xaml 的交互逻辑
     /// </summary>
-    public partial class ErrorMessageDialog : UserControl
+    public partial class MessageDialog : UserControl
     {
-        public ErrorMessageDialog()
+        public MessageDialog()
         {
             InitializeComponent();
+        }
+        public MessageDialog(string Content)
+        {
+            InitializeComponent();
+            txtContent.Text = Content;
+        }
+        public MessageDialog(string Content, string Title)
+        {
+            InitializeComponent();
+            txtContent.Text = Content;
+            txtTitel.Text = Title;
         }
     }
 }

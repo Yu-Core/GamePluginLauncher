@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="GamePluginLauncher.View.Dialogs.ErrorMessageDialog"
+﻿<UserControl x:Class="GamePluginLauncher.View.Dialogs.MessageDialog"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,18 +9,21 @@
              xmlns:system="clr-namespace:System;assembly=netstandard"
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel Width="300" Margin="16">
-        <TextBlock Text="提示" 
+        <TextBlock x:Name="txtTitel"
+                   Text="提示" 
                    HorizontalAlignment="Left"
                    FontWeight="Bold"/>
 
-        <TextBlock Margin="0 16 0 16"
+        <TextBlock x:Name="txtContent"
+                   Margin="0 16 0 16"
                    Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                    FontSize="16"
-                   HorizontalAlignment="Center"
-                   Text="{Binding}">
+                   TextWrapping="Wrap"
+                   HorizontalAlignment="Center">
         </TextBlock>
 
-        <Button Style="{StaticResource MaterialDesignFlatButton}"
+        <Button x:Name="btnOK"
+                Style="{StaticResource MaterialDesignFlatButton}"
                 Content="确定"
                 Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"/>
     </StackPanel>
