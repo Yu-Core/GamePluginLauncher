@@ -23,9 +23,21 @@ namespace GamePluginLauncher.View
     public partial class PluginSelector : Window
     {
         PluginSelectorViewModel pluginSelectorViewModel => (PluginSelectorViewModel)DataContext;
-        public GameLauncher GameLauncher
-        { 
-            set=> pluginSelectorViewModel.GameLauncher = value;
+        public int LauncherId
+        {
+            set
+            {
+                var gameLauncher = StaticData.GameLaunchers.FirstOrDefault(it => it.Id == value);
+                if (gameLauncher != null)
+                {
+                    pluginSelectorViewModel.GameLauncher = gameLauncher;
+                }
+                else
+                {
+                    this.Close();
+                    MessageBox.Show("该游戏启动器不存在");
+                }
+            }
         }
         public PluginSelector()
         {

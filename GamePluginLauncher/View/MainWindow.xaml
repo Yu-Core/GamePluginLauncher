@@ -74,11 +74,13 @@
                         <Button Style="{StaticResource MaterialDesignToolButton}"
                                 Foreground="{StaticResource MaterialDesignDarkForeground}"
                                 HorizontalAlignment="Right"
+                                IsCancel="True"
                                 Command="{Binding CloseWindowCommand}"
                                 CommandParameter="{Binding ElementName=MainWindowOnly}">
                             <materialDesign:PackIcon Kind="WindowClose"
-                                                     Width="30"
-                                                     Height="30"/>
+                                                     Width="35"
+                                                     Height="35"
+                                                     VerticalAlignment="Center"/>
                         </Button>
                     </Grid>
                 </materialDesign:ColorZone>
@@ -123,7 +125,7 @@
                                             BorderThickness="0"
                                             materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                             Command="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel.OpenGameLauncherCommand}"
-                                            CommandParameter="{Binding}">
+                                            CommandParameter="{Binding Path=Id}">
                                         <Grid Width="200"
                                               Height="120">
                                             <Grid.RowDefinitions>

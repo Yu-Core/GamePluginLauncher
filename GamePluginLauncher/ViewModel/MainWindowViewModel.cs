@@ -133,11 +133,11 @@ namespace GamePluginLauncher.ViewModel
                 MsgBoxHelper.ShowError(e.Message);
             }
         }
-        private void OpenGameLauncher(object gameLauncher)
+        private void OpenGameLauncher(object LauncherId)
         {
             var pluginSelector = new PluginSelector()
             {
-                GameLauncher = (GameLauncher)gameLauncher
+                LauncherId = (int)LauncherId
             };
             pluginSelector.ShowDialog();
         }
