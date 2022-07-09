@@ -21,6 +21,7 @@
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         AllowsTransparency="True"
+        ShowInTaskbar="False"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}">
     <materialDesign:DialogHost DialogTheme="Inherit">
         <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
@@ -60,7 +61,7 @@
                                           Padding="16"
                                           Foreground="{StaticResource MaterialDesignDarkForeground}"
                                           materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                                          ClipToBounds="False">
+                                          ClipToBounds="False" MouseLeftButtonDown="ColorZone_MouseLeftButtonDown">
                     <Grid >
                         <ToggleButton x:Name="MenuToggleButton"
                                       Style="{StaticResource MaterialDesignHamburgerToggleButton}"
@@ -155,7 +156,9 @@
                                                             Command="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel.RenameGameLauncherCommand}"
                                                             CommandParameter="{Binding}">
                                                     </Button>
-                                                    <Button Content="创建快捷方式"></Button>
+                                                    <Button Content="创建快捷方式"
+                                                            Command="{Binding Source={StaticResource Locator},Path=MainWindowViewModel.CreateDesktopShortcutsCommand}"
+                                                            CommandParameter="{Binding}"></Button>
                                                     <Button Content="打开游戏启动路径"
                                                             Command="{Binding Source={StaticResource Locator},Path=MainWindowViewModel.ShowInExplorerCommand}"
                                                             CommandParameter="{Binding}"/>
