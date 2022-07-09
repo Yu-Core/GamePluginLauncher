@@ -190,7 +190,15 @@ namespace GamePluginLauncher.ViewModel
         {
             string LnkName = $"{gameLauncher.Name}启动器";
             string GamePath = gameLauncher.GamePlugins[0].Path;
-            string Arguments = $"{GamePath} {gameLauncher.Id.ToString()}";
+            string Arguments = gameLauncher.Id.ToString();
+            string exePath = AppDomain.CurrentDomain.BaseDirectory + "LauncherAssist" + ".exe";
+
+            if (!File.Exists(exePath))
+            {
+                var dialog = new MessageDialog("LauncherAssist.exe不存在，无法创建桌面快捷方式");
+                await DialogHost.Show(dialog);
+                return;
+            }
 
             string shortcutPath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), LnkName + ".lnk");
             // 确定是否已创建快捷方式
@@ -202,7 +210,7 @@ namespace GamePluginLauncher.ViewModel
             }
             //string AppName = System.IO.Path.GetFileName(System.Reflection.Assembly.GetEntryAssembly().GetName().Name);
             // 获取当前应用程序目录地址
-            string exePath = AppDomain.CurrentDomain.BaseDirectory + "LauncherAssist" + ".exe";
+            
             IW.IWshShell shell = new IW.WshShell();
             
             //foreach (var item in Directory.GetFiles(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "*.lnk"))
