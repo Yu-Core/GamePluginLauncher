@@ -217,7 +217,7 @@
                                     Style="{StaticResource MaterialDesignToolButton}"
                                     Padding="0"
                                     VerticalAlignment="Bottom"
-                                    Command="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel.EditGameLauncherPathCommand}"
+                                    Command="{Binding Source={StaticResource Locator}, Path=PluginSelectorViewModel.EditGamePluginPathCommand}"
                                     CommandParameter="{Binding Source={x:Reference txtPluginPath}}">
                                 <materialDesign:PackIcon  
                                      Kind="FolderOutline"
