@@ -21,7 +21,6 @@
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         AllowsTransparency="True"
-        ShowInTaskbar="False"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}">
     <materialDesign:DialogHost DialogTheme="Inherit">
         <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
