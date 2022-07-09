@@ -5,6 +5,8 @@ VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamePluginLauncher", "GamePluginLauncher\GamePluginLauncher.csproj", "{B44C4B9B-9732-4800-83BD-DF8865D5A81D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LauncherAssist", "LauncherAssist\LauncherAssist.csproj", "{64441D87-FA54-4C33-A9C1-03B3065D3132}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{B44C4B9B-9732-4800-83BD-DF8865D5A81D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B44C4B9B-9732-4800-83BD-DF8865D5A81D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B44C4B9B-9732-4800-83BD-DF8865D5A81D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64441D87-FA54-4C33-A9C1-03B3065D3132}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64441D87-FA54-4C33-A9C1-03B3065D3132}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64441D87-FA54-4C33-A9C1-03B3065D3132}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64441D87-FA54-4C33-A9C1-03B3065D3132}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

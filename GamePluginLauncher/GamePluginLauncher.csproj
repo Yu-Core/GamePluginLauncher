@@ -59,6 +59,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LauncherAssist\LauncherAssist.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Resources\favicon.ico" />
   </ItemGroup>
 

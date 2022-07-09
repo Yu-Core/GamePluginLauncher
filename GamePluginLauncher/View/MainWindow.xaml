@@ -18,7 +18,7 @@
         Height="500" 
         Width="950" 
         x:Name="MainWindowOnly"
-        WindowStartupLocation="CenterScreen"
+        WindowStartupLocation="CenterScreen" 
         WindowStyle="None"
         AllowsTransparency="True"
         DataContext="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel}">
