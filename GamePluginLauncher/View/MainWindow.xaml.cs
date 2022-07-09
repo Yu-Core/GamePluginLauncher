@@ -31,5 +31,12 @@ namespace GamePluginLauncher.View
         {
             e.Handled = true;
         }
+
+        private void ColorZone_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+                this.DragMove();
+
+        }
     }
 }

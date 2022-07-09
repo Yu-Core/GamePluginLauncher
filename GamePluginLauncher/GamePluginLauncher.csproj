@@ -10,10 +10,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Imgs\**" />
-    <EmbeddedResource Remove="Imgs\**" />
-    <None Remove="Imgs\**" />
-    <Page Remove="Imgs\**" />
+    <None Remove="Resources\favicon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <COMReference Include="IWshRuntimeLibrary">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>0</VersionMinor>
+      <VersionMajor>1</VersionMajor>
+      <Guid>f935dc20-1cf0-11d0-adb9-00c04fd58a0b</Guid>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -47,6 +56,10 @@
 
   <ItemGroup>
     <Folder Include="View\Custom\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\favicon.ico" />
   </ItemGroup>
 
 </Project>

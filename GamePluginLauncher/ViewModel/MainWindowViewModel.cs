@@ -18,6 +18,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using IW = IWshRuntimeLibrary;
 
 namespace GamePluginLauncher.ViewModel
 {
@@ -36,6 +37,7 @@ namespace GamePluginLauncher.ViewModel
         public DelegateCommand? ShowAboutCommand { get; set; }
         public DelegateCommand? ThanksCommand { get; set; }
         public DelegateCommand? CloseWindowCommand { get; set; }
+        public DelegateCommand? CreateDesktopShortcutsCommand { get; set; }
 
         private void NewGameLauncher(object obj)
         {
@@ -184,6 +186,46 @@ namespace GamePluginLauncher.ViewModel
         {
             ((Window)obj).Close();
         }
+        public async void CreateDesktopShortcuts(GameLauncher gameLauncher)
+        {
+            string LnkName = $"{gameLauncher.Name}启动器";
+            string Arguments = gameLauncher.Id.ToString();
+            string GamePath = gameLauncher.GamePlugins[0].Path;
+
+            string shortcutPath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), LnkName + ".lnk");
+            // 确定是否已创建快捷方式
+            if (System.IO.File.Exists(shortcutPath))
+            {
+                var dialog = new MessageDialog("快捷方式已存在，请勿重复创建");
+                await DialogHost.Show(dialog);
+                return;
+            }
+            string AppName = System.IO.Path.GetFileName(System.Reflection.Assembly.GetEntryAssembly().GetName().Name);
+            // 获取当前应用程序目录地址
+            string exePath = AppDomain.CurrentDomain.BaseDirectory + AppName + ".exe";
+            IW.IWshShell shell = new IW.WshShell();
+            
+            //foreach (var item in Directory.GetFiles(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "*.lnk"))
+            //{
+            //    IW.WshShortcut tempShortcut = (IW.WshShortcut)shell.CreateShortcut(item);
+            //    if (tempShortcut.TargetPath == exePath&&tempShortcut.Arguments == Arguments&& tempShortcut.Description == GamePath)
+            //    {
+            //        var dialog = new MessageDialog("快捷方式已存在，请勿重复创建");
+            //        await DialogHost.Show(dialog);
+            //        return;
+            //    }
+            //}
+            IW.WshShortcut shortcut = (IW.WshShortcut)shell.CreateShortcut(shortcutPath);
+            shortcut.TargetPath = exePath;//应用程序路径
+            shortcut.Arguments = Arguments;// 参数  
+            shortcut.Description = $"{GamePath}";//描述
+            shortcut.WorkingDirectory = Environment.CurrentDirectory;//程序所在文件夹，在快捷方式图标点击右键可以看到此属性  
+            shortcut.IconLocation = GamePath;//图标，该图标是应用程序的资源文件  
+            shortcut.WindowStyle = 1;
+            shortcut.Save();
+            var dialog2 = new MessageDialog("桌面快捷方式已创建");
+            await DialogHost.Show(dialog2);
+        }
         protected override void Init()
         {
             base.Init();
@@ -200,6 +242,7 @@ namespace GamePluginLauncher.ViewModel
             ShowAboutCommand = new DelegateCommand(ShowAbout);
             ThanksCommand = new DelegateCommand(Thanks);
             CloseWindowCommand = new DelegateCommand(CloseWindow);
+            CreateDesktopShortcutsCommand = new DelegateCommand<GameLauncher>(CreateDesktopShortcuts);
         }
     }
 }

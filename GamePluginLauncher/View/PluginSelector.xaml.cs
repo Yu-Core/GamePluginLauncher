@@ -34,8 +34,8 @@ namespace GamePluginLauncher.View
                 }
                 else
                 {
-                    this.Close();
                     MessageBox.Show("该游戏启动器不存在");
+                    this.Close();
                 }
             }
         }
