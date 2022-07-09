@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace GamePluginLauncher.ViewModel
 {
@@ -27,6 +28,7 @@ namespace GamePluginLauncher.ViewModel
 
         public DelegateCommand? OpenGamePluginCommand { get; set; }
         public DelegateCommand? RemoveGamePluginCommand { get; set; }
+        public DelegateCommand? EditGamePluginPathCommand { get; set; }
 
         private void OpenGamePlugin(int id)
         {
@@ -51,6 +53,7 @@ namespace GamePluginLauncher.ViewModel
             base.Init();
             RemoveGamePluginCommand = new DelegateCommand<AnimImage>(RemoveGamePlugin);
             OpenGamePluginCommand = new DelegateCommand<int>(OpenGamePlugin);
+            EditGamePluginPathCommand = new DelegateCommand(EditGamePluginPath);
         }
 
         private async void RemoveGamePlugin(AnimImage animImage)
@@ -80,6 +83,24 @@ namespace GamePluginLauncher.ViewModel
                 {
                     MsgBoxHelper.ShowError("删除失败，错误原因：" + ex.Message);
                 }
+            }
+        }
+        private void EditGamePluginPath(object obj)
+        {
+            try
+            {
+                var ofd = new OpenFileDialog
+                {
+                    Filter = "应用程序|*.exe"
+                };
+                if (ofd.ShowDialog() == true)
+                {
+                    ((TextBox)obj).Text = ofd.FileName;
+                }
+            }
+            catch (Exception ex)
+            {
+                MsgBoxHelper.ShowError(ex.Message);
             }
         }
     }
