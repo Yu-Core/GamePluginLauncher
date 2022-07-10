@@ -45,21 +45,5 @@ namespace GamePluginLauncher.View
             InitializeComponent();
 
         }
-        protected override void OnClosed(EventArgs e)
-        {
-            //CMV.ClearElementList();
-            base.OnClosed(e);
-            
-            bool flag = true;
-            foreach(Window item in Application.Current.Windows)
-            {
-                if(item is MainWindow)
-                {
-                    flag = false;
-                }
-            }
-            if (flag) Application.Current.Shutdown();
-            
-        }
     }
 }
