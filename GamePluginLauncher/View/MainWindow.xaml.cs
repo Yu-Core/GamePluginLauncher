@@ -38,10 +38,5 @@ namespace GamePluginLauncher.View
                 this.DragMove();
 
         }
-        protected override void OnClosed(EventArgs e)
-        {
-            Application.Current.Shutdown();
-            base.OnClosed(e);
-        }
     }
 }
