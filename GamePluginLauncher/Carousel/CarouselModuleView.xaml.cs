@@ -309,5 +309,13 @@ namespace GamePluginLauncher.Carousel
                 MsgBoxHelper.ShowError("删除失败");
             }
         }
+        public void ClearElementList()
+        {
+            foreach(var element in this.ElementList)
+            {
+                element.ImgMain.Source = null;
+            }
+            ElementList.Clear();
+        }
     }
 }
