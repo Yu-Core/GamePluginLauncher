@@ -31,7 +31,11 @@
                         HorizontalAlignment="Right" 
                         Margin="0,0,0,16"
                         IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}"/>
-
+                    <Button Command="{Binding OpenSettingsCommand}"
+                            Margin="4"
+                            HorizontalAlignment="Center"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Content="设置" />
                     <Button Command="{Binding ViewSourceCommand}"
                             Margin="4"
                             HorizontalAlignment="Center"
@@ -134,14 +138,15 @@
                                             </Grid.RowDefinitions>
 
                                             <materialDesign:PopupBox x:Name="LauncherOptions"
-                                                         HorizontalAlignment="Right"
-                                                         Style="{StaticResource  MaterialDesignToolPopupBox}"
-                                                         PopupUniformCornerRadius="10"
-                                                         Width="25"
-                                                         Height="25"
-                                                         Margin="0,0,8,-16"
-                                                         Padding="2 0 2 0"
-                                                         ButtonBase.Click="LauncherOptions_Click">
+                                                                     Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                                                     HorizontalAlignment="Right"
+                                                                     Style="{StaticResource  MaterialDesignToolPopupBox}"
+                                                                     PopupUniformCornerRadius="10"
+                                                                     Width="25"
+                                                                     Height="25"
+                                                                     Margin="0,0,8,-16"
+                                                                     Padding="2 0 2 0"
+                                                                     ButtonBase.Click="LauncherOptions_Click">
                                                 <StackPanel>
                                                     <Button Content="添加插件"
                                                             Command="{Binding Source={StaticResource Locator}, Path=MainWindowViewModel.AddGamePluginCommand}"
@@ -182,6 +187,7 @@
                                                            VerticalAlignment="Center"
                                                            HorizontalAlignment="Center"
                                                            Margin="10,0,0,0"
+                                                           FontSize="15"
                                                            Width="85"
                                                            Height="35"
                                                            TextWrapping="Wrap"
