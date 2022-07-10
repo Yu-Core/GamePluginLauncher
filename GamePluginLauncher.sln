@@ -5,7 +5,7 @@ VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamePluginLauncher", "GamePluginLauncher\GamePluginLauncher.csproj", "{B44C4B9B-9732-4800-83BD-DF8865D5A81D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LauncherAssist", "LauncherAssist\LauncherAssist.csproj", "{64441D87-FA54-4C33-A9C1-03B3065D3132}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LauncherAssist", "LauncherAssist\LauncherAssist.csproj", "{64441D87-FA54-4C33-A9C1-03B3065D3132}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
