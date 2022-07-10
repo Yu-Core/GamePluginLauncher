@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:GamePluginLauncher"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              xmlns:ViewModel="clr-namespace:GamePluginLauncher.ViewModel"
-             ShutdownMode="OnLastWindowClose">
+             ShutdownMode="OnExplicitShutdown">
     <Application.Resources>
         <ResourceDictionary>
             <ViewModel:ViewModelLocator x:Key="Locator"/>

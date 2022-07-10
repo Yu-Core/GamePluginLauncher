@@ -22,7 +22,7 @@
             </Grid.RowDefinitions>
             <Border Padding="15,15,15,0">
                 <Grid x:Name="GdContent" Background="Transparent">
-                    <carousel:CarouselModuleView DataContext="{Binding Path=GameLauncher}"  >
+                    <carousel:CarouselModuleView x:Name="CMV" DataContext="{Binding Path=GameLauncher}"  >
                     </carousel:CarouselModuleView>
                 </Grid>
             </Border>

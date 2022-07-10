@@ -147,7 +147,8 @@ namespace GamePluginLauncher.Carousel
         private void ImageItem_Loaded(object sender, RoutedEventArgs e)
         {
             this.Loaded -= ImageItem_Loaded;
-            AsynchUtils.AsynchSleepExecuteFunc(this.Dispatcher, LoadUiImmediate, 0.5);
+            LoadUiImmediate();
+            //AsynchUtils.AsynchSleepExecuteFunc(this.Dispatcher, LoadUiImmediate, 0.5);
         }
 
         private void Save()

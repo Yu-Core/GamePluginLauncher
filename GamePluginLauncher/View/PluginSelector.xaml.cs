@@ -3,6 +3,7 @@ using GamePluginLauncher.Model;
 using GamePluginLauncher.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,6 +43,22 @@ namespace GamePluginLauncher.View
         public PluginSelector()
         {
             InitializeComponent();
+
+        }
+        protected override void OnClosed(EventArgs e)
+        {
+            //CMV.ClearElementList();
+            base.OnClosed(e);
+            
+            bool flag = true;
+            foreach(Window item in Application.Current.Windows)
+            {
+                if(item is MainWindow)
+                {
+                    flag = false;
+                }
+            }
+            if (flag) Application.Current.Shutdown();
             
         }
     }
