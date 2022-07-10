@@ -45,6 +45,13 @@ namespace GamePluginLauncher.ViewModel
             {
                 MsgBoxHelper.ShowError($"启动时发生错误：{Executer.GetErrorStr(info)}");
             }
+            else
+            {
+                if (StaticData.Config.IsCloseAfterPluginStarted)
+                {
+                    Application.Current.Shutdown();
+                }
+            }
         }
 
 

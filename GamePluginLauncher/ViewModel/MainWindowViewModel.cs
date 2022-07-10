@@ -38,6 +38,7 @@ namespace GamePluginLauncher.ViewModel
         public DelegateCommand? ThanksCommand { get; set; }
         public DelegateCommand? CloseWindowCommand { get; set; }
         public DelegateCommand? CreateDesktopShortcutsCommand { get; set; }
+        public DelegateCommand? OpenSettingsCommand { get; set; }
 
         private void NewGameLauncher(object obj)
         {
@@ -234,6 +235,11 @@ namespace GamePluginLauncher.ViewModel
             var dialog2 = new MessageDialog("桌面快捷方式已创建");
             await DialogHost.Show(dialog2);
         }
+        private async void OpenSettings(object obj)
+        {
+            var dialog = new SettingsDialog();
+                await DialogHost.Show(dialog);
+        }
         protected override void Init()
         {
             base.Init();
@@ -251,6 +257,7 @@ namespace GamePluginLauncher.ViewModel
             ThanksCommand = new DelegateCommand(Thanks);
             CloseWindowCommand = new DelegateCommand(CloseWindow);
             CreateDesktopShortcutsCommand = new DelegateCommand<GameLauncher>(CreateDesktopShortcuts);
+            OpenSettingsCommand = new DelegateCommand(OpenSettings);
         }
     }
 }

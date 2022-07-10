@@ -55,10 +55,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="View\Custom\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\LauncherAssist\LauncherAssist.csproj" />
   </ItemGroup>
 
