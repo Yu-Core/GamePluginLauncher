@@ -42,21 +42,6 @@ namespace GamePluginLauncher.Carousel
                 _gamePlugin = value;
             }
         }
-        //public string PluginName { 
-        //    get => PluginName;
-        //    set
-        //    {
-        //        PluginName = value;
-        //        ConnectStrChanged?.Invoke(null, EventArgs.Empty);
-        //    }
-        //}
-        //public string PluginPath { get; set; }
-        //public string PluginBackgroundPath { get; set; }
-        //public GamePlugin gamePlugin
-        //{
-        //    get => StaticData.GameLaunchers[LauncherId].GamePlugins[PluginId];
-        //    set => StaticData.GameLaunchers[LauncherId].GamePlugins[PluginId] = value;
-        //}
 
         public bool Is180
         {

@@ -45,7 +45,7 @@ namespace GamePluginLauncher.Carousel
             this.CreateElements();
 
             this.GdRoot.MouseLeftButtonDown += GdRoot_MouseLeftButtonDown;
-            //this.MouseMove += Carousel2DView_MouseMove;
+            this.MouseMove += Carousel2DView_MouseMove;
             this.MouseUp += Carousel2DView_MouseUp;
             RotateToSelectItem();
         }
@@ -229,6 +229,7 @@ namespace GamePluginLauncher.Carousel
         #region Drag And Move
 
         private bool IsMouseDown = false;
+        private bool IsMouseMoved = false;
         private double PreviousX = 0;
         private double CurrentX = 0;
         private double IntervalDegree = 0;
@@ -244,24 +245,26 @@ namespace GamePluginLauncher.Carousel
             CompositionTarget.Rendering -= new EventHandler(CompositionTarget_Rendering);
         }
 
-        //private void Carousel2DView_MouseMove(object sender, MouseEventArgs e)
-        //{
-        //    if (this.IsMouseDown)
-        //    {
-        //        this.CurrentX = e.GetPosition(this).X;
-        //        this.IntervalDegree = this.CurrentX - this.PreviousX;
-        //        this.TotalMoveDegree += Math.Abs(this.IntervalDegree * 0.5d);
-        //        this.InertiaDegree = this.IntervalDegree * 5d;
+        private void Carousel2DView_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (this.IsMouseDown)
+            {
+                this.IsMouseMoved = true;
+                this.CurrentX = e.GetPosition(this).X;
+                this.IntervalDegree = this.CurrentX - this.PreviousX;
+                this.TotalMoveDegree += Math.Abs(this.IntervalDegree * 0.5d);
+                this.InertiaDegree = this.IntervalDegree * 5d;
 
-        //        for (int i = 0; i < this.ElementList.Count; i++)
-        //        {
-        //            AnimImage oItem = this.ElementList[i];
-        //            oItem.Degree += this.IntervalDegree;
-        //        }
-        //        this.UpdateLocation();
-        //        this.PreviousX = this.CurrentX;
-        //    }
-        //}
+                for (int i = 0; i < this.ElementList.Count; i++)
+                {
+                    AnimImage oItem = this.ElementList[i];
+                    oItem.Degree += this.IntervalDegree;
+                }
+                this.UpdateLocation();
+                this.PreviousX = this.CurrentX;
+
+            }
+        }
 
         private void Carousel2DView_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -273,6 +276,28 @@ namespace GamePluginLauncher.Carousel
                 {
                     CompositionTarget.Rendering -= new EventHandler(CompositionTarget_Rendering);
                     CompositionTarget.Rendering += new EventHandler(CompositionTarget_Rendering);
+                }
+
+                bool Is180 = false;
+                foreach (AnimImage item in this.CvMain.Children)
+                {
+                    if(item.Is180 == true) Is180 = true;
+                }
+                if (IsMouseMoved && !Is180)
+                {
+                    double tempDegree = 0;
+                    int tempId = 0;
+                    foreach(AnimImage item in this.CvMain.Children)
+                    {
+                        if( Math.Abs(tempDegree - CenterDegree )> Math.Abs(item.Degree - CenterDegree))
+                        {
+                            tempDegree = item.Degree;
+                            tempId = item.PluginId;
+                        }
+                    }
+                    this.gameLauncher.SelectPluginId = tempId;
+                    RotateToSelectItem();
+                    IsMouseMoved = false;
                 }
             }
         }
@@ -299,23 +324,14 @@ namespace GamePluginLauncher.Carousel
             var plugin = this.ElementList.Where(it=>it.PluginId == pluginId).FirstOrDefault();
             if(plugin != null)
             {
-                this.ElementList.Remove(plugin);
-                this.CvMain.Children.Remove(plugin);
-                plugin.IsVisible = false;
-                RotateToSelectItem();
+                this.ElementList.Clear();
+                this.CvMain.Children.Clear();
+                CreateElements();
             }
             else
             {
                 MsgBoxHelper.ShowError("删除失败");
             }
-        }
-        public void ClearElementList()
-        {
-            foreach(var element in this.ElementList)
-            {
-                element.ImgMain.Source = null;
-            }
-            ElementList.Clear();
         }
     }
 }
