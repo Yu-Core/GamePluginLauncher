@@ -281,7 +281,11 @@ namespace GamePluginLauncher.Carousel
                 bool Is180 = false;
                 foreach (AnimImage item in this.CvMain.Children)
                 {
-                    if(item.Is180 == true) Is180 = true;
+                    if (item.Is180 == true)
+                    {
+                        Is180 = true;
+                        this.gameLauncher.SelectPluginId = item.PluginId;
+                    }
                 }
                 if (IsMouseMoved && !Is180)
                 {
