@@ -142,6 +142,12 @@ namespace GamePluginLauncher.ViewModel
             {
                 LauncherId = (int)LauncherId
             };
+
+            
+
+            var _mainWindow = Application.Current.Windows.Cast<Window>().FirstOrDefault(window => window is MainWindow) as MainWindow;
+            if (_mainWindow != null) _mainWindow.WindowState = WindowState.Minimized;
+
             pluginSelector.ShowDialog();
         }
         private void EditGameLauncherPath(object obj)

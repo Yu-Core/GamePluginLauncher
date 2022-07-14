@@ -2,6 +2,7 @@
 using GamePluginLauncher.Model;
 using GamePluginLauncher.Utils;
 using GamePluginLauncher.Utils.Converters;
+using GamePluginLauncher.View;
 using GamePluginLauncher.View.Dialogs;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
@@ -115,6 +116,8 @@ namespace GamePluginLauncher.ViewModel
         private void CloseWindow(object obj)
         {
             ((Window)obj).Close();
+            var _mainWindow = Application.Current.Windows.Cast<Window>().FirstOrDefault(window => window is MainWindow) as MainWindow;
+            if (_mainWindow != null) _mainWindow.WindowState = WindowState.Normal;
         }
     }
 }
