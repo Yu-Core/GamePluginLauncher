@@ -29,6 +29,7 @@ namespace GamePluginLauncher.ViewModel
         public DelegateCommand? OpenGamePluginCommand { get; set; }
         public DelegateCommand? RemoveGamePluginCommand { get; set; }
         public DelegateCommand? EditGamePluginPathCommand { get; set; }
+        public DelegateCommand? CloseWindowCommand { get; set; }
 
         private void OpenGamePlugin(int id)
         {
@@ -61,6 +62,7 @@ namespace GamePluginLauncher.ViewModel
             RemoveGamePluginCommand = new DelegateCommand<AnimImage>(RemoveGamePlugin);
             OpenGamePluginCommand = new DelegateCommand<int>(OpenGamePlugin);
             EditGamePluginPathCommand = new DelegateCommand(EditGamePluginPath);
+            CloseWindowCommand = new DelegateCommand(CloseWindow);
         }
 
         private async void RemoveGamePlugin(AnimImage animImage)
@@ -109,6 +111,10 @@ namespace GamePluginLauncher.ViewModel
             {
                 MsgBoxHelper.ShowError(ex.Message);
             }
+        }
+        private void CloseWindow(object obj)
+        {
+            ((Window)obj).Close();
         }
     }
 }
