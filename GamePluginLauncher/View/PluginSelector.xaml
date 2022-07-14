@@ -6,30 +6,66 @@
         xmlns:local="clr-namespace:GamePluginLauncher"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:carousel="clr-namespace:GamePluginLauncher.Carousel"
+        xmlns:carousel="clr-namespace:GamePluginLauncher.Carousel" xmlns:converters="clr-namespace:GamePluginLauncher.Utils.Converters"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="YouYuan"
+        WindowStyle="None"
+        x:Name="PluginSelectorXaml"
+        AllowsTransparency="True"
         Title="选择插件" Height="450" Width="800" WindowStartupLocation="CenterScreen"
         DataContext="{Binding Source={StaticResource Locator}, Path=PluginSelectorViewModel}">
-   <materialDesign:DialogHost Identifier="PluginDialog" DialogTheme="Inherit">
+    <Window.Resources>
+        <converters:GameLauncherToBackground x:Key="GameLauncherToBackground"></converters:GameLauncherToBackground>
+    </Window.Resources>
+    <Window.Background>
+        <VisualBrush>
+            <VisualBrush.Visual>
+                <Image>
+                    <Image.Source>
+                        <MultiBinding Converter="{StaticResource GameLauncherToBackground}">
+                            <Binding Path="GameLauncher.SelectPluginId"></Binding>
+                            <Binding Path="GameLauncher.Id"></Binding>
+                        </MultiBinding>
+                    </Image.Source>
+                    <Image.Effect>
+                        <BlurEffect KernelType="Box" Radius="12" ></BlurEffect>
+                    </Image.Effect>
+                </Image>
+            </VisualBrush.Visual>
+        </VisualBrush>
+    </Window.Background>
+    <materialDesign:DialogHost Identifier="PluginDialog" DialogTheme="Inherit">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
-                <RowDefinition Height="150"></RowDefinition>
+                <RowDefinition Height="100"></RowDefinition>
             </Grid.RowDefinitions>
             <Border Padding="15,15,15,0">
-                <Grid x:Name="GdContent" Background="Transparent">
+                <Grid x:Name="GdContent" Background="Transparent" Margin="0,20,0,0">
                     <carousel:CarouselModuleView x:Name="CMV" DataContext="{Binding Path=GameLauncher}"  >
                     </carousel:CarouselModuleView>
                 </Grid>
             </Border>
+            <Button Style="{StaticResource MaterialDesignToolButton}"
+                    Foreground="{StaticResource MaterialDesignDarkForeground}"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Margin="20"
+                    IsCancel="True"
+                    Command="{Binding CloseWindowCommand}"
+                    CommandParameter="{Binding ElementName=PluginSelectorXaml}">
+                <materialDesign:PackIcon Kind="WindowClose"
+                                                     Width="35"
+                                                     Height="35"
+                                                     VerticalAlignment="Center"/>
+            </Button>
             <Button Grid.Row="1"
-                    Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                    Style="{StaticResource MaterialDesignFlatMidBgButton}"
                     Width="200"
                     Height="50"
+                    VerticalAlignment="Top"
                     materialDesign:ShadowAssist.ShadowDepth="Depth3"
                     materialDesign:ButtonAssist.CornerRadius="20"
                     Content="启动"

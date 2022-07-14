@@ -17,7 +17,7 @@
         Title="游戏插件启动器" 
         Height="500" 
         Width="950" 
-        x:Name="MainWindowOnly"
+        x:Name="MainWindowXaml"
         WindowStartupLocation="CenterScreen" 
         WindowStyle="None"
         AllowsTransparency="True"
@@ -80,7 +80,7 @@
                                 HorizontalAlignment="Right"
                                 IsCancel="True"
                                 Command="{Binding CloseWindowCommand}"
-                                CommandParameter="{Binding ElementName=MainWindowOnly}">
+                                CommandParameter="{Binding ElementName=MainWindowXaml}">
                             <materialDesign:PackIcon Kind="WindowClose"
                                                      Width="35"
                                                      Height="35"
