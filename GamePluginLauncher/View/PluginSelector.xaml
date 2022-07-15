@@ -48,19 +48,26 @@
                     </carousel:CarouselModuleView>
                 </Grid>
             </Border>
-            <Button Style="{StaticResource MaterialDesignToolButton}"
-                    Foreground="{StaticResource MaterialDesignDarkForeground}"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    Margin="20"
-                    IsCancel="True"
-                    Command="{Binding CloseWindowCommand}"
-                    CommandParameter="{Binding ElementName=PluginSelectorXaml}">
-                <materialDesign:PackIcon Kind="WindowClose"
-                                                     Width="35"
-                                                     Height="35"
-                                                     VerticalAlignment="Center"/>
-            </Button>
+
+            <materialDesign:ColorZone VerticalAlignment="Top"
+                                      HorizontalAlignment="Stretch"
+                                      Height="50"
+                                      Mode="Custom"
+                                      MouseLeftButtonDown="ColorZone_MouseLeftButtonDown">
+                <Button Style="{StaticResource MaterialDesignToolButton}"
+                        Foreground="{StaticResource MaterialDesignDarkForeground}"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0,20,20,0"
+                        IsCancel="True"
+                        Command="{Binding CloseWindowCommand}"
+                        CommandParameter="{Binding ElementName=PluginSelectorXaml}">
+                        <materialDesign:PackIcon Kind="WindowClose"
+                                                         Width="35"
+                                                         Height="35"
+                                                         VerticalAlignment="Center"/>
+                </Button>
+            </materialDesign:ColorZone>
             <Button Grid.Row="1"
                     Style="{StaticResource MaterialDesignFlatMidBgButton}"
                     Width="200"

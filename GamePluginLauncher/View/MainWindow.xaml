@@ -64,7 +64,8 @@
                                           Padding="16"
                                           Foreground="{StaticResource MaterialDesignDarkForeground}"
                                           materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                                          ClipToBounds="False" MouseLeftButtonDown="ColorZone_MouseLeftButtonDown">
+                                          ClipToBounds="False" 
+                                          MouseLeftButtonDown="ColorZone_MouseLeftButtonDown">
                     <Grid >
                         <ToggleButton x:Name="MenuToggleButton"
                                       Style="{StaticResource MaterialDesignHamburgerToggleButton}"
