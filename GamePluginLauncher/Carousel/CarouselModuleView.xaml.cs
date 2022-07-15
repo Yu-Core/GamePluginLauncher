@@ -47,9 +47,11 @@ namespace GamePluginLauncher.Carousel
             this.GdRoot.MouseLeftButtonDown += GdRoot_MouseLeftButtonDown;
             this.MouseMove += Carousel2DView_MouseMove;
             this.MouseUp += Carousel2DView_MouseUp;
+            this.MouseLeave += Carousel2DView_MouseLeave;
             RotateToSelectItem();
         }
 
+       
         #region Create Elements
 
         private double Radius = 325d;
@@ -287,6 +289,8 @@ namespace GamePluginLauncher.Carousel
                         this.gameLauncher.SelectPluginId = item.PluginId;
                     }
                 }
+
+                //鼠标抬起时，如果不存在滑动到180度的插件，距离最近的插件自动滑动到180度
                 if (IsMouseMoved && !Is180)
                 {
                     double tempDegree = 0;
@@ -304,6 +308,11 @@ namespace GamePluginLauncher.Carousel
                     IsMouseMoved = false;
                 }
             }
+        }
+
+        private void Carousel2DView_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Carousel2DView_MouseUp(sender, new MouseButtonEventArgs(e.MouseDevice,e.Timestamp,0));
         }
 
         private void CompositionTarget_Rendering(object sender, EventArgs e)

@@ -13,14 +13,16 @@
                    Text="提示" 
                    HorizontalAlignment="Left"
                    FontWeight="Bold"/>
-
-        <TextBlock x:Name="txtContent"
+        <ScrollViewer MaxHeight="300">
+            <TextBlock x:Name="txtContent"
                    Margin="0 16 0 16"
                    Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                    FontSize="16"
                    TextWrapping="Wrap"
                    HorizontalAlignment="Center">
-        </TextBlock>
+            </TextBlock>
+        </ScrollViewer>
+        
 
         <Button x:Name="btnOK"
                 Style="{StaticResource MaterialDesignFlatButton}"
