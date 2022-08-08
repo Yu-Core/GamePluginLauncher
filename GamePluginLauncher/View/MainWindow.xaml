@@ -76,17 +76,29 @@
                                        Style="{StaticResource MaterialDesignHeadline5TextBlock}"
                                        HorizontalAlignment="Center"
                                        Text="Game Plugin Launcher" />
-                        <Button Style="{StaticResource MaterialDesignToolButton}"
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Right">
+                            <Button Style="{StaticResource MaterialDesignToolButton}"
                                 Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                HorizontalAlignment="Right"
-                                IsCancel="True"
-                                Command="{Binding CloseWindowCommand}"
+                                Command="{Binding MinWindowCommand}"
                                 CommandParameter="{Binding ElementName=MainWindowXaml}">
-                            <materialDesign:PackIcon Kind="WindowClose"
+                                <materialDesign:PackIcon Kind="Minus"
                                                      Width="35"
                                                      Height="35"
                                                      VerticalAlignment="Center"/>
-                        </Button>
+                            </Button>
+                            <Button Style="{StaticResource MaterialDesignToolButton}"
+                                Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                IsCancel="True"
+                                Command="{Binding CloseWindowCommand}"
+                                CommandParameter="{Binding ElementName=MainWindowXaml}">
+                                <materialDesign:PackIcon Kind="WindowClose"
+                                                     Width="35"
+                                                     Height="35"
+                                                     VerticalAlignment="Center"/>
+                            </Button>
+                        </StackPanel>
+                        
                     </Grid>
                 </materialDesign:ColorZone>
                 <Border Grid.Row="1"
