@@ -31,6 +31,7 @@ namespace GamePluginLauncher.ViewModel
         public DelegateCommand? RemoveGamePluginCommand { get; set; }
         public DelegateCommand? EditGamePluginPathCommand { get; set; }
         public DelegateCommand? CloseWindowCommand { get; set; }
+        public DelegateCommand? MinWindowCommand { get; set; }
 
         private void OpenGamePlugin(int id)
         {
@@ -64,6 +65,7 @@ namespace GamePluginLauncher.ViewModel
             OpenGamePluginCommand = new DelegateCommand<int>(OpenGamePlugin);
             EditGamePluginPathCommand = new DelegateCommand(EditGamePluginPath);
             CloseWindowCommand = new DelegateCommand(CloseWindow);
+            MinWindowCommand = new DelegateCommand(MinWindow);
         }
 
         private async void RemoveGamePlugin(AnimImage animImage)
@@ -118,6 +120,10 @@ namespace GamePluginLauncher.ViewModel
             ((Window)obj).Close();
             var _mainWindow = Application.Current.Windows.Cast<Window>().FirstOrDefault(window => window is MainWindow) as MainWindow;
             if (_mainWindow != null) _mainWindow.WindowState = WindowState.Normal;
+        }
+        private void MinWindow(object obj)
+        {
+            ((Window)obj).WindowState = WindowState.Minimized;
         }
     }
 }

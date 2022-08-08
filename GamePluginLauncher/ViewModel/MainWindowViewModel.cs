@@ -37,6 +37,7 @@ namespace GamePluginLauncher.ViewModel
         public DelegateCommand? ShowAboutCommand { get; set; }
         public DelegateCommand? ThanksCommand { get; set; }
         public DelegateCommand? CloseWindowCommand { get; set; }
+        public DelegateCommand? MinWindowCommand { get; set; }
         public DelegateCommand? CreateDesktopShortcutsCommand { get; set; }
         public DelegateCommand? OpenSettingsCommand { get; set; }
 
@@ -191,6 +192,10 @@ namespace GamePluginLauncher.ViewModel
         {
             ((Window)obj).Close();
         }
+        private void MinWindow(object obj)
+        {
+            ((Window)obj).WindowState = WindowState.Minimized;
+        }
         public async void CreateDesktopShortcuts(GameLauncher gameLauncher)
         {
             string LnkName = $"{gameLauncher.Name}启动器";
@@ -260,6 +265,7 @@ namespace GamePluginLauncher.ViewModel
             ShowAboutCommand = new DelegateCommand(ShowAbout);
             ThanksCommand = new DelegateCommand(Thanks);
             CloseWindowCommand = new DelegateCommand(CloseWindow);
+            MinWindowCommand = new DelegateCommand(MinWindow);
             CreateDesktopShortcutsCommand = new DelegateCommand<GameLauncher>(CreateDesktopShortcuts);
             OpenSettingsCommand = new DelegateCommand(OpenSettings);
         }
