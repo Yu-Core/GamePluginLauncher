@@ -20,8 +20,8 @@ namespace GamePluginLauncher.ViewModel
 {
     public class PluginSelectorViewModel:ViewModelBase
     {
-        private GameLauncher _gameLauncher;
-        public GameLauncher GameLauncher
+        private GameLauncher? _gameLauncher;
+        public GameLauncher? GameLauncher
         {
             get => _gameLauncher;
             set => UpdateValue(ref _gameLauncher,value); 
@@ -35,7 +35,7 @@ namespace GamePluginLauncher.ViewModel
 
         private void OpenGamePlugin(int id)
         {
-            var plugin = GameLauncher.GamePlugins.FirstOrDefault(x => x.Id == id);
+            var plugin = GameLauncher?.GamePlugins?.FirstOrDefault(x => x.Id == id);
             if(plugin == null)
             {
                 MsgBoxHelper.ShowError("该插件不存在");
@@ -79,11 +79,11 @@ namespace GamePluginLauncher.ViewModel
             {
                 try
                 {
-                    var plugins = StaticData.GameLaunchers.Where(it => it.Id == GameLauncher.Id).First().GamePlugins;
-                    var plugin = plugins.Where(it=>it.Id == animImage.PluginId).FirstOrDefault();
+                    var plugins = StaticData.GameLaunchers?.First(it => it.Id == GameLauncher?.Id).GamePlugins;
+                    var plugin = plugins?.Where(it=>it.Id == animImage.PluginId).FirstOrDefault();
                     if (plugin != null)
                     {
-                        plugins.Remove(plugin);
+                        plugins?.Remove(plugin);
 
                         var cmv = ParentElementHelper.GetParent<CarouselModuleView>(animImage);
                         cmv.RemoveElement(animImage.PluginId);
