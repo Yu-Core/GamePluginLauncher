@@ -8,7 +8,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <ApplicationIcon>Resources\favicon.ico</ApplicationIcon>
 	<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
-	<Version>1.0.4</Version>
+	<Version>1.1.0</Version>
 	<Authors>Yu-Core</Authors>
   </PropertyGroup>
 
