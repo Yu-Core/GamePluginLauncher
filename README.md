@@ -13,3 +13,7 @@
 ![输入图片说明](Images/2022-07-14_223733.png)
 
 ![输入图片说明](Images/2022-07-14_224818.png)
+
+#### 下载渠道
+- [GitHub Releases](https://github.com/Yu-Core/GamePluginLauncher/releases)
+- [Gitee Releases](https://gitee.com/Yu-core/GamePluginLauncher/releases)
