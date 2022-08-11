@@ -17,3 +17,4 @@
 #### 下载渠道
 - [GitHub Releases](https://github.com/Yu-Core/GamePluginLauncher/releases)
 - [Gitee Releases](https://gitee.com/Yu-core/GamePluginLauncher/releases)
+
