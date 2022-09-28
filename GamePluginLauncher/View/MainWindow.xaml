@@ -14,7 +14,7 @@
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="Microsoft YaHei UI"
-        Title="游戏插件启动器" 
+        Title="游戏插件管理器" 
         Height="500" 
         Width="950" 
         x:Name="MainWindowXaml"
@@ -75,7 +75,7 @@
                                        Margin="16 0 0 0"
                                        Style="{StaticResource MaterialDesignHeadline5TextBlock}"
                                        HorizontalAlignment="Center"
-                                       Text="Game Plugin Launcher" />
+                                       Text="游戏插件管理器" />
                         <StackPanel Orientation="Horizontal"
                                     HorizontalAlignment="Right">
                             <Button Style="{StaticResource MaterialDesignToolButton}"

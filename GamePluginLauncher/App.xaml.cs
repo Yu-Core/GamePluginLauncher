@@ -65,7 +65,7 @@ namespace GamePluginLauncher
         {
             Process cur = Process.GetCurrentProcess();
             //return (from p in Process.GetProcesses() where p.ProcessName == cur.ProcessName && p.Id != cur.Id select p).FirstOrDefault();
-            return Process.GetProcesses().Where(it => it.ProcessName == cur.ProcessName && it.Id != cur.Id).FirstOrDefault();
+            return Process.GetProcesses().FirstOrDefault(it => it.ProcessName == cur.ProcessName && it.Id != cur.Id);
         }
     }
 }
