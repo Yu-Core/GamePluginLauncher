@@ -19,10 +19,17 @@
 - [Gitee Releases](https://gitee.com/Yu-core/GamePluginLauncher/releases)
 
 ####感谢以下项目
+
 [https://github.com/Mzying2001/AppLauncher_WPF](https://github.com/Mzying2001/AppLauncher_WPF)
+
 [https://github.com/DuelWithSelf/WPFEffects](https://github.com/DuelWithSelf/WPFEffects)
+
 [https://github.com/e23z/LnkReader](https://github.com/e23z/LnkReader)
+
 [https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit](https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit)
+
 [https://github.com/Microsoft/XamlBehaviorsWpf](https://github.com/Microsoft/XamlBehaviorsWpf)
+
 [https://github.com/Mzying2001/SimpleMvvm](https://github.com/Mzying2001/SimpleMvvm)
+
 [https://github.com/PxAndy/WpfMultiStyle](https://github.com/PxAndy/WpfMultiStyle)
