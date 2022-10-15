@@ -1,6 +1,8 @@
 ﻿using GamePluginLauncher.Model;
 using GamePluginLauncher.Utils;
 using GamePluginLauncher.View;
+using GamePluginLauncher.View.Dialogs;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -20,6 +22,7 @@ namespace GamePluginLauncher
     {
         protected override void OnStartup(StartupEventArgs e)
         {
+            //判断程序是否已经打开
             if (GetStartedProcess() is Process p)
             {
                 WinApi.SendMessage(p.MainWindowHandle, 0x0400, default, default);
@@ -28,13 +31,21 @@ namespace GamePluginLauncher
             else
             {
                 base.OnStartup(e);
-                
+                //初始化静态数据
                 StaticData.InitStaticData();
-
+                //判断是否有启动参数（直接打开是没有启动参数的，如果通过桌面创建的图标打开会有参数，会打开控制台程序，进而打开该程序）
                 if (e.Args.Length > 0)
                 {
                     try
                     {
+                        var LauncherId = Convert.ToInt32(e.Args[0]);
+                        var Has = StaticData.GameLaunchers.Where(x => x.Id == LauncherId).Any();
+                        if(!Has)
+                        {
+                            MsgBoxHelper.ShowError("该管理器不存在");
+                            Environment.Exit(0);
+                        }
+                        //根据参数，启动相应的管理器
                         var pluginSelector = new PluginSelector()
                         {
                             LauncherId = Convert.ToInt32(e.Args[0])
